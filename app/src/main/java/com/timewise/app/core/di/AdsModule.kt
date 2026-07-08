@@ -1,9 +1,15 @@
 package com.timewise.app.core.di
 
 import android.content.Context
+import androidx.room.Room
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.timewise.app.BuildConfig
+import com.timewise.app.data.local.TimeWiseDatabase
+import com.timewise.app.data.local.dao.EventDao
+import com.timewise.app.data.local.dao.TaskDao
+import com.timewise.app.data.local.dao.TimeBlockDao
+import com.timewise.app.data.local.migration.MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,4 +54,26 @@ object AdsModule {
     private const val TEST_BANNER       = "ca-app-pub-3940256099942544/6300978111"
     private const val TEST_INTERSTITIAL = "ca-app-pub-3940256099942544/1033173712"
     private const val TEST_REWARDED     = "ca-app-pub-3940256099942544/5224354917"
+
+    @Provides
+    @Singleton
+    fun provideDatabase (@ApplicationContext context: Context): TimeWiseDatabase =
+        Room.databaseBuilder(context, TimeWiseDatabase::class.java, "timewise-database")
+            .addMigrations (MIGRATION_1_2)
+            .build ()
+
+    @Provides
+    @Singleton
+    fun provideTaskDao (database: TimeWiseDatabase): TaskDao =
+        database.taskDao()
+
+    @Provides
+    @Singleton
+    fun provideTimeBlockDao (database: TimeWiseDatabase): TimeBlockDao =
+        database.timeBlockDao()
+
+    @Provides
+    @Singleton
+    fun provideEventDao (database: TimeWiseDatabase): EventDao =
+        database.eventDao()
 }

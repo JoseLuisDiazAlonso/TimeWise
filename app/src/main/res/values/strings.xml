@@ -32,6 +32,15 @@
     <string name="time_block_overlap_error">Este horario se solapa con otro bloque</string>
     <string name="time_block_saved">Bloque guardado correctamente</string>
 
+    <!-- Agenda Diaria / Semanal (Card #7) -->
+    <string name="agenda_empty_daily_state">No tienes tareas programadas para este día</string>
+    <string name="agenda_empty_weekly_state">No tienes tareas programadas esta semana</string>
+    <string name="agenda_no_tasks_day">Sin tareas</string>
+    <string name="agenda_mode_daily">Diario</string>
+    <string name="agenda_mode_weekly">Semanal</string>
+    <string name="cd_agenda_previous">Periodo anterior</string>
+    <string name="cd_agenda_next">Periodo siguiente</string>
+
     <!-- ═══════════════════════════════════════════════ -->
     <!-- GESTIÓN DE TAREAS                                -->
     <!-- ═══════════════════════════════════════════════ -->
@@ -296,5 +305,13 @@
     <string name="search_hint">Buscar tareas…</string>
     <string name="search_no_results">No se encontraron resultados para "%1$s"</string>
     <string name="search_clear">Limpiar búsqueda</string>
+
+
+    <!-- Nombres de categorías predefinidas -->
+    <string name="category_work" translatable="false">Trabajo</string>
+    <string name="category_personal" translatable="false">Personal</string>
+    <string name="category_study" translatable="false">Estudio</string>
+    <string name="category_health" translatable="false">Salud</string>
+    <string name="category_home" translatable="false">Casa</string>
 
 </resources>

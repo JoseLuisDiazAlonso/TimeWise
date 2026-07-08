@@ -32,6 +32,15 @@
     <string name="time_block_overlap_error">This time slot overlaps with another block</string>
     <string name="time_block_saved">Block saved successfully</string>
 
+    <!-- Daily / Weekly Agenda (Card #7) -->
+    <string name="agenda_empty_daily_state">You have no tasks scheduled for this day</string>
+    <string name="agenda_empty_weekly_state">You have no tasks scheduled this week</string>
+    <string name="agenda_no_tasks_day">No tasks</string>
+    <string name="agenda_mode_daily">Daily</string>
+    <string name="agenda_mode_weekly">Weekly</string>
+    <string name="cd_agenda_previous">Previous period</string>
+    <string name="cd_agenda_next">Next period</string>
+
     <!-- ═══════════════════════════════════════════════ -->
     <!-- TASK MANAGEMENT                                  -->
     <!-- ═══════════════════════════════════════════════ -->
@@ -296,5 +305,12 @@
     <string name="search_hint">Search tasks…</string>
     <string name="search_no_results">No results found for "%1$s"</string>
     <string name="search_clear">Clear search</string>
+
+    <!-- Predefined category names -->
+    <string name="category_work">Work</string>
+    <string name="category_personal">Personal</string>
+    <string name="category_study">Study</string>
+    <string name="category_health">Health</string>
+    <string name="category_home">Home</string>
 
 </resources>

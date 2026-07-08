@@ -2,8 +2,10 @@ package com.timewise.app.core.di
 /**Creamos una clase que me permita que cuando el ViewModel le pida a Hilt que muestre
  * una interfaz (TaskRepository) la inyecte con las dependencias necesarias. (muestre el código real**/
 
+import com.timewise.app.data.repository.EventRepositoryImpl
 import com.timewise.app.data.repository.TaskRepositoryImpl
 import com.timewise.app.data.repository.TimeBlockRepositoryImpl
+import com.timewise.app.domain.repository.EventRepository
 import com.timewise.app.domain.repository.TaskRepository
 import com.timewise.app.domain.repository.TimeBlockRepository
 import dagger.Binds
@@ -27,4 +29,10 @@ abstract class RepositoryModule {
     abstract fun bindTimeBlockRepository(
         impl: TimeBlockRepositoryImpl
     ): TimeBlockRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindEventRepository(
+        impl: EventRepositoryImpl
+    ): EventRepository
 }

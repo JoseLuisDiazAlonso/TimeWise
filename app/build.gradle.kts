@@ -83,6 +83,7 @@ android {
 dependencies {
     implementation(libs.multidex)          // ← duplicado eliminado
     implementation(libs.transport.api)
+    implementation(libs.remote.creation.core)
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
     androidTestImplementation(composeBom)
@@ -133,4 +134,7 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test.junit4)
     androidTestImplementation(libs.hilt.testing)
     kspAndroidTest(libs.hilt.compiler)
+    implementation (libs.androix.hilt.navigation.compose)
+    implementation (libs.material.icons.core)
+
 }
