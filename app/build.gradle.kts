@@ -84,6 +84,7 @@ dependencies {
     implementation(libs.multidex)          // ← duplicado eliminado
     implementation(libs.transport.api)
     implementation(libs.remote.creation.core)
+    implementation(libs.espresso.core)
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
     androidTestImplementation(composeBom)

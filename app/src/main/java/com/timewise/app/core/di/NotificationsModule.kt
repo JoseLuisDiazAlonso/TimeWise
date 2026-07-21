@@ -4,6 +4,9 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
+import com.timewise.app.data.notifications.AlarmManagerReminderScheduler
+import com.timewise.app.domain.repository.ReminderScheduler
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,4 +36,18 @@ object NotificationsModule {
         manager.createNotificationChannels(channels)
         return manager
     }
+    @Provides
+    @Singleton
+    fun provideAlarmManager (
+        @ApplicationContext context: Context
+    ) = context.getSystemService(Context.ALARM_SERVICE) as android.app.AlarmManager
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class ReminderBindingsModule {
+    @Binds
+    abstract fun bindReminderScheduler (
+        impl : AlarmManagerReminderScheduler,
+    ) : ReminderScheduler
 }
