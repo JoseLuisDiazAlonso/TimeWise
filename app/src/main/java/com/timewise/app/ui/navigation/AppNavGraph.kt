@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.timewise.app.ui.agenda.AgendaScreen
+import com.timewise.app.ui.onboarding.OnboardingScreen
 import com.timewise.app.ui.taskform.TaskFormScreen
 
 /**
@@ -16,27 +17,41 @@ import com.timewise.app.ui.taskform.TaskFormScreen
  * y salida de la agenda.
  * **/
 @Composable
-fun AppNavGraph () {
+fun AppNavGraph (startDestination: String) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = "agenda"
+        startDestination = startDestination
     ) {
-        composable("agenda") {
+        composable("onboarding") {
+            OnboardingScreen(
+                onFinished = {
+                    navController.navigate("agenda") {
+                        popUpTo("onboarding") { inclusive = true }
+
+                    }
+                }
+            )
+        }
+        composable ("agenda") {
             AgendaScreen(
-                onTaskClick = { task ->
-                    navController.navigate("taskForm?taskId=${task.id}")
+                onTaskClick = { taskId ->
+                    navController.navigate("task_form/$taskId")
                 },
                 onAddTaskClick = {
                     navController.navigate("taskForm")
                 }
             )
         }
-        composable(
-            route = "taskForm?taskId = {taskId}",
-            arguments = listOf(navArgument("taskId") { type = NavType.LongType; defaultValue = -1L })
-        ) { backStackEntry ->
-            TaskFormScreen(
+        composable (
+            route = "taskForm?taskId={taskId}",
+            arguments = listOf(navArgument("taskId") {
+                type = NavType.LongType;
+                defaultValue = -1L
+            })
+        ){
+            backStackEntry ->
+            TaskFormScreen (
                 onTaskSaved = {
                     navController.popBackStack()
                 }

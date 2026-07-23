@@ -137,5 +137,6 @@ dependencies {
     kspAndroidTest(libs.hilt.compiler)
     implementation (libs.androix.hilt.navigation.compose)
     implementation (libs.material.icons.core)
+    implementation (libs.appcompat)
 
 }

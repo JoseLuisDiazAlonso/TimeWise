@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_notification_title" />
+    <string name="onboarding_notification_granted" />
+    <string name="plan_free_title" />
+    <string name="plan_free_price" />
+    <string name="plan_free_feature1" />
+    <string name="plan_free_feature2" />
+    <string name="plan_free_feature3" />
+    <string name="plan_premium_title" />
+    <string name="plan_premium_price" />
+    <string name="plan_premium_feature1" />
+    <string name="plan_premium_feature2" />
+    <string name="plan_premium_feature3" />
+    <string name="plan_free_feature_1" />
+    <string name="plan_free_feature_2" />
+    <string name="plan_free_feature_3" />
+    <string name="plan_premium_feature_1" />
+    <string name="plan_premium_feature_2" />
+    <string name="plan_premium_feature_3" />
+    <string name="plan_premium_feature_4" />
+</resources>
