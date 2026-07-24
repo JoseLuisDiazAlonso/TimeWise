@@ -19,4 +19,14 @@
     <string name="plan_premium_feature_2" />
     <string name="plan_premium_feature_3" />
     <string name="plan_premium_feature_4" />
+    <string name="premium_coming_soon" />
+    <string name="settings_section_language" />
+    <string name="settings_section_notifications" />
+    <string name="settings_notifications_enabled" />
+    <string name="language" />
+    <string name="premium_status_active" />
+    <string name="premium_status_free" />
+    <string name="settings_premium_cta" />
+    <string name="settings_notifications_blocked_action" />
+    <string name="settings_section_premium" />
 </resources>

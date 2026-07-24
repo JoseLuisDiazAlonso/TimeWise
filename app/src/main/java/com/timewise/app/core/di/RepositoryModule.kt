@@ -5,9 +5,11 @@ package com.timewise.app.core.di
 import com.timewise.app.data.repository.EventRepositoryImpl
 import com.timewise.app.data.repository.TaskRepositoryImpl
 import com.timewise.app.data.repository.TimeBlockRepositoryImpl
+import com.timewise.app.data.repository.UserPreferencesRepositoryImpl
 import com.timewise.app.domain.repository.EventRepository
 import com.timewise.app.domain.repository.TaskRepository
 import com.timewise.app.domain.repository.TimeBlockRepository
+import com.timewise.app.domain.repository.UserPreferencesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -35,4 +37,9 @@ abstract class RepositoryModule {
     abstract fun bindEventRepository(
         impl: EventRepositoryImpl
     ): EventRepository
+
+    @Binds
+    abstract fun bindUserPreferencesRepository(
+        impl: UserPreferencesRepositoryImpl
+    ): UserPreferencesRepository
 }

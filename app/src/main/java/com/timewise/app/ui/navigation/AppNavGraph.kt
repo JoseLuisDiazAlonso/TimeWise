@@ -10,7 +10,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.timewise.app.ui.agenda.AgendaScreen
 import com.timewise.app.ui.onboarding.OnboardingScreen
+import com.timewise.app.ui.premium.PremiumScreen
+import com.timewise.app.ui.settings.SettingsScreen
 import com.timewise.app.ui.taskform.TaskFormScreen
+
+
 
 /**
  * Registramos la pantalla al Grafo y aceptando un id y conectando los puntos de entrada
@@ -33,7 +37,7 @@ fun AppNavGraph (startDestination: String) {
                 }
             )
         }
-        composable ("agenda") {
+        composable("agenda") {
             AgendaScreen(
                 onTaskClick = { taskId ->
                     navController.navigate("task_form/$taskId")
@@ -43,22 +47,39 @@ fun AppNavGraph (startDestination: String) {
                 }
             )
         }
-        composable (
+        composable(
             route = "taskForm?taskId={taskId}",
             arguments = listOf(navArgument("taskId") {
                 type = NavType.LongType;
                 defaultValue = -1L
             })
-        ){
-            backStackEntry ->
-            TaskFormScreen (
+        ) { backStackEntry ->
+            TaskFormScreen(
                 onTaskSaved = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable("settings") {
+            SettingsScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onNavigateToPremium = {
+                    navController.navigate("premium")
+                }
+            )
+        }
+        composable("premium") {
+            PremiumScreen(
+                onNavigateBack = {
                     navController.popBackStack()
                 }
             )
         }
     }
 }
+
 
 
 

@@ -138,5 +138,7 @@ dependencies {
     implementation (libs.androix.hilt.navigation.compose)
     implementation (libs.material.icons.core)
     implementation (libs.appcompat)
+    implementation ("androidx.datastore:datastore-preferences:1.1.1")
+    implementation ("androidx.appcompat:appcompat:1.7.0")
 
 }

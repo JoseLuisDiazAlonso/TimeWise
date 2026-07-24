@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TimeWise">
+        android:theme="@style/Theme.TimeWise"
+        android:localeConfig="@xml/locales_config">
 
         <!-- ✅ AÑADE ESTE BLOQUE para resolver el conflicto AdMob vs Analytics -->
         <property

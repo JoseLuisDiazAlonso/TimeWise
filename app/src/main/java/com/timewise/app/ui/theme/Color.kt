@@ -34,3 +34,4 @@ val CategoryStudy   = Color(0xFF283593)  // Estudio  — Índigo 800
 val CategoryHealth  = Color(0xFF00897B)  // Salud    — Teal 600 (ya existe)
 val CategoryHome    = Color(0xFF2E7D32)  // Casa     — Verde 800
 val CategoryNeutral = Color(0xFF79747E)  // Neutro   (ya existe)
+val PremiumGold = androidx.compose.ui.graphics.Color(0xFFB8860B)

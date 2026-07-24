@@ -18,6 +18,11 @@ Esta clase le dice al Hilt como debe de montar el Onboarding.
 **/
 
 private val Context.userPreferenceDataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
+private const val SETTINGS_PREFERENCES = "timewise_settings"
+
+private val Context.dataStore: DataStore<Preferences> by
+preferencesDataStore(name = SETTINGS_PREFERENCES)
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -31,6 +36,13 @@ object DataStoreModule {
 
     @Provides
     @Singleton
-    fun provideOnboardingDataStore (@ApplicationContext context: Context): DataStore<Preferences> =
+    fun provideOnboardingDataStore(@ApplicationContext context: Context): DataStore<Preferences> =
         context.onboardingDataStore
-    }
+
+    @Provides
+    @Singleton
+    fun provideSettingsDataStore(@ApplicationContext context: Context): DataStore<Preferences> =
+        context.dataStore
+}
+
+

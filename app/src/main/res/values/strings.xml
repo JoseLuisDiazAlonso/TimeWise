@@ -91,6 +91,11 @@
     <string name="category_empty_state">No hay categorías creadas</string>
     <string name="category_delete_confirm">¿Eliminar esta categoría? Las tareas asociadas no se borrarán.</string>
     <string name="category_tasks_count">%1$d tareas</string>
+    <string name="category_work" translatable="false">Trabajo</string>
+    <string name="category_personal" translatable="false">Personal</string>
+    <string name="category_study" translatable="false">Estudio</string>
+    <string name="category_health" translatable="false">Salud</string>
+    <string name="category_home" translatable="false">Casa</string>
 
     <!-- ═══════════════════════════════════════════════ -->
     <!-- RECORDATORIOS / NOTIFICACIONES                   -->
@@ -124,6 +129,11 @@
     <string name="onboarding_step3_desc">Recibe notificaciones a tiempo para no olvidar ninguna tarea o compromiso.</string>
     <string name="onboarding_step4_title">Sincronización en la nube</string>
     <string name="onboarding_step4_desc">Con TimeWise Premium, accede a tu agenda desde cualquier dispositivo. Tus datos siempre contigo.</string>
+    <string name="onboarding_language_title" />
+    <string name="onboarding_language_desc" />
+    <string name="onboarding_notification_desc" />
+    <string name="onboarding_notification_title" />
+    <string name="onboarding_notification_granted" />
 
     <!-- ═══════════════════════════════════════════════ -->
     <!-- PREMIUM / SUSCRIPCIÓN                            -->
@@ -146,6 +156,26 @@
     <string name="premium_already_subscribed">Ya tienes una suscripción activa.</string>
     <string name="premium_terms">Al suscribirte aceptas los Términos de Uso y la Política de Privacidad.</string>
     <string name="onboarding_plans_title">Elige como quieres usar TimeWise</string>
+    <string name="plan_free_title" />
+    <string name="plan_free_price" />
+    <string name="plan_free_feature1" />
+    <string name="plan_free_feature2" />
+    <string name="plan_free_feature3" />
+    <string name="plan_premium_title" />
+    <string name="plan_premium_price" />
+    <string name="plan_premium_feature1" />
+    <string name="plan_premium_feature2" />
+    <string name="plan_premium_feature3" />
+    <string name="plan_free_feature_1" />
+    <string name="plan_free_feature_2" />
+    <string name="plan_free_feature_3" />
+    <string name="plan_premium_feature_1" />
+    <string name="plan_premium_feature_2" />
+    <string name="plan_premium_feature_3" />
+    <string name="plan_premium_feature_4" />
+    <string name="premium_coming_soon" />
+    <string name="premium_status_active" />
+    <string name="premium_status_free" />
 
     <!-- ═══════════════════════════════════════════════ -->
     <!-- AJUSTES                                           -->
@@ -176,6 +206,15 @@
     <string name="settings_terms">Términos de uso</string>
     <string name="settings_rate_app">Valorar la app</string>
     <string name="settings_contact">Contacto</string>
+    <string name="settings_section_language" />
+    <string name="settings_section_notifications" />
+    <string name="settings_notifications_enabled" />
+    <string name="language_spanish">Español</string>
+    <string name="language_english">Inglés</string>
+
+    <string name="settings_premium_cta" />
+    <string name="settings_notifications_blocked_action" />
+    <string name="settings_section_premium" />
 
     <!-- ═══════════════════════════════════════════════ -->
     <!-- ERRORES Y VALIDACIÓN                             -->
@@ -306,35 +345,5 @@
     <string name="search_hint">Buscar tareas…</string>
     <string name="search_no_results">No se encontraron resultados para "%1$s"</string>
     <string name="search_clear">Limpiar búsqueda</string>
-
-
-    <!-- Nombres de categorías predefinidas -->
-    <string name="category_work" translatable="false">Trabajo</string>
-    <string name="category_personal" translatable="false">Personal</string>
-    <string name="category_study" translatable="false">Estudio</string>
-    <string name="category_health" translatable="false">Salud</string>
-    <string name="category_home" translatable="false">Casa</string>
-    <string name="onboarding_language_title" />
-    <string name="onboarding_language_desc" />
-    <string name="onboarding_notification_desc" />
-    <string name="onboarding_notification_title" />
-    <string name="onboarding_notification_granted" />
-    <string name="plan_free_title" />
-    <string name="plan_free_price" />
-    <string name="plan_free_feature1" />
-    <string name="plan_free_feature2" />
-    <string name="plan_free_feature3" />
-    <string name="plan_premium_title" />
-    <string name="plan_premium_price" />
-    <string name="plan_premium_feature1" />
-    <string name="plan_premium_feature2" />
-    <string name="plan_premium_feature3" />
-    <string name="plan_free_feature_1" />
-    <string name="plan_free_feature_2" />
-    <string name="plan_free_feature_3" />
-    <string name="plan_premium_feature_1" />
-    <string name="plan_premium_feature_2" />
-    <string name="plan_premium_feature_3" />
-    <string name="plan_premium_feature_4" />
 
 </resources>
