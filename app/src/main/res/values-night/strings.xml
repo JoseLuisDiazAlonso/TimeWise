@@ -29,4 +29,13 @@
     <string name="settings_premium_cta" />
     <string name="settings_notifications_blocked_action" />
     <string name="settings_section_premium" />
+    <string name="admob_app_id" />
+    <string name="admob_banner_agenda_id" />
+    <string name="paywall_title" />
+    <string name="paywall_cta_subscribe" />
+    <string name="paywall_plan_annual_label" />
+    <string name="paywall_plan_monthly_label" />
+    <string name="ads_rewarded_unlocked_badge" />
+    <string name="ads_rewarded_cd_icon" />
+    <string name="ads_rewarded_watch_button" />
 </resources>

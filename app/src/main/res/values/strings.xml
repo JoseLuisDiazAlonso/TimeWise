@@ -345,5 +345,21 @@
     <string name="search_hint">Buscar tareas…</string>
     <string name="search_no_results">No se encontraron resultados para "%1$s"</string>
     <string name="search_clear">Limpiar búsqueda</string>
+    <string name="admob_app_id" />
+    <string name="admob_banner_agenda_id" />
+
+    <!--BILLING MODULE-->
+    <string name="billing_monthly_price">€2,99/mes</string>
+    <string name="billing_annual_price">€19,99/año</string>
+    <string name="billing_error_generic">No se pudo completar la compra. Inténtalo de nuevo.</string>
+    <string name="paywall_title">Hazte Premium</string>
+    <string name="paywall_cta_subscribe">Suscribirme</string>
+    <string name="paywall_plan_annual_label">Anual (Ahorra más)</string>
+    <string name="paywall_plan_monthly_label">Mensual</string>
+    <string name="ads_rewarded_watch_button">Ver anuncio para desbloquear</string>
+    <string name="ads_rewarded_cd_icon">Icono de video recompensando</string>
+    <string name="ads_rewarded_loading">Cargando anuncio...</string>
+    <string name="ads_rewarded_unlocked_badge">Desbloqueado-%1$d h</string>
+    <string name="ads_rewarded_unavailable">Anuncio no disponible por ahora, inténtalo más tarde</string>
 
 </resources>

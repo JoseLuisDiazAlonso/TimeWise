@@ -1,4 +1,4 @@
-package com.timewise.app.ui.components
+package com.timewise.app.ui.agenda.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row

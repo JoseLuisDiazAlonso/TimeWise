@@ -346,5 +346,23 @@
     <string name="settings_premium_cta" />
     <string name="settings_notifications_blocked_action" />
     <string name="settings_section_premium" />
+    <string name="admob_app_id" />
+    <string name="admob_banner_agenda_id" />
+
+    <!--BILLING-->
+    <string name="billing_monthly_price">€2,99/month</string>
+    <string name="billing_annual_price">€19,99/year</string>
+    <string name="billing_error_generic">We couldn\'t complete the purchase. Please try again.</string>
+    <string name="paywall_title">Go Premium</string>
+    <string name="paywall_cta_subscribe">Subscribe</string>
+    <string name="paywall_plan_annual_label">Annual (best value)</string>
+    <string name="paywall_plan_monthly_label">Subscribe</string>
+
+    <!-- Rewarded Ads -->
+    <string name="ads_rewarded_unlocked_badge">Unlocked-%1$d h</string>
+    <string name="ads_rewarded_cd_icon">Rewarded video icon</string>
+    <string name="ads_rewarded_watch_button">Watch ad to unlock</string>
+    <string name="ads_rewarded_unavailable">Ad not available right now, try again later</string>
+    <string name="ads_rewarded_loading">Loading ad...</string>
 
 </resources>

@@ -5,11 +5,21 @@ import androidx.room.Room
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.timewise.app.BuildConfig
+import com.timewise.app.data.ads.InterstitialAdManagerImpl
 import com.timewise.app.data.local.TimeWiseDatabase
 import com.timewise.app.data.local.dao.EventDao
 import com.timewise.app.data.local.dao.TaskDao
 import com.timewise.app.data.local.dao.TimeBlockDao
 import com.timewise.app.data.local.migration.MIGRATION_1_2
+import com.timewise.app.data.preferences.AdFrequencyPreferencesImpl
+import com.timewise.app.data.preferences.TemporaryUnlockPreferencesImpl
+import com.timewise.app.data.repository.PremiumRepositoryImpl
+import com.timewise.app.domain.ads.InterstitialAdController
+import com.timewise.app.domain.ads.RewardedAdController
+import com.timewise.app.domain.repository.AdFrequencyRepository
+import com.timewise.app.domain.repository.PremiumRepository
+import com.timewise.app.domain.repository.TemporaryUnlockRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,56 +34,89 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AdsModule {
+abstract class AdsModule {
 
-    @Provides
-    @Singleton
-    fun provideMobileAds(@ApplicationContext context: Context): Boolean {
-        MobileAds.initialize(context) {}
-        return true
+    @Module
+    @InstallIn (SingletonComponent::class)
+    abstract class AdsModule {
+        @Binds
+        abstract fun bindRewardedAdController(
+            impl: com.timewise.app.data.ads.RewardedAdManagerImpl
+        ): RewardedAdController
+        @Binds
+        abstract fun bindTemporaryUnlockRepository (
+            impl: TemporaryUnlockPreferencesImpl): TemporaryUnlockRepository
     }
 
-    @Provides
-    fun provideAdRequest(): AdRequest = AdRequest.Builder().build()
-
-    @BannerAdUnitId
-    @Provides
-    fun provideBannerAdUnitId(): String =
-        if (BuildConfig.USE_TEST_ADS) TEST_BANNER else BuildConfig.ADMOB_BANNER_ID
-
-    @InterstitialAdUnitId
-    @Provides
-    fun provideInterstitialAdUnitId(): String =
-        if (BuildConfig.USE_TEST_ADS) TEST_INTERSTITIAL else BuildConfig.ADMOB_INTER_ID
-
-    @RewardedAdUnitId
-    @Provides
-    fun provideRewardedAdUnitId(): String =
-        if (BuildConfig.USE_TEST_ADS) TEST_REWARDED else BuildConfig.ADMOB_REWARDED_ID
-
-    private const val TEST_BANNER       = "ca-app-pub-3940256099942544/6300978111"
-    private const val TEST_INTERSTITIAL = "ca-app-pub-3940256099942544/1033173712"
-    private const val TEST_REWARDED     = "ca-app-pub-3940256099942544/5224354917"
-
-    @Provides
+    @Binds
     @Singleton
-    fun provideDatabase (@ApplicationContext context: Context): TimeWiseDatabase =
-        Room.databaseBuilder(context, TimeWiseDatabase::class.java, "timewise-database")
-            .addMigrations (MIGRATION_1_2)
-            .build ()
+    abstract fun bindPremiumRepository(
+        impl: PremiumRepositoryImpl
+    ): PremiumRepository
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideTaskDao (database: TimeWiseDatabase): TaskDao =
-        database.taskDao()
+    abstract fun bindAdFrequencyRepository(
+        impl: AdFrequencyPreferencesImpl
+    ): AdFrequencyRepository
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideTimeBlockDao (database: TimeWiseDatabase): TimeBlockDao =
-        database.timeBlockDao()
+    abstract fun bindInterstitialAdController(
+        impl: InterstitialAdManagerImpl
+    ): InterstitialAdController
 
-    @Provides
-    @Singleton
-    fun provideEventDao (database: TimeWiseDatabase): EventDao =
-        database.eventDao()
+    companion object {
+
+        @Provides
+        @Singleton
+        fun provideMobileAds(@ApplicationContext context: Context): Boolean {
+            MobileAds.initialize(context) {}
+            return true
+        }
+
+        @Provides
+        fun provideAdRequest(): AdRequest = AdRequest.Builder().build()
+
+        @BannerAdUnitId
+        @Provides
+        fun provideBannerAdUnitId(): String =
+            if (BuildConfig.USE_TEST_ADS) TEST_BANNER else BuildConfig.ADMOB_BANNER_ID
+
+        @InterstitialAdUnitId
+        @Provides
+        fun provideInterstitialAdUnitId(): String =
+            if (BuildConfig.USE_TEST_ADS) TEST_INTERSTITIAL else BuildConfig.ADMOB_INTER_ID
+
+        @RewardedAdUnitId
+        @Provides
+        fun provideRewardedAdUnitId(): String =
+            if (BuildConfig.USE_TEST_ADS) TEST_REWARDED else BuildConfig.ADMOB_REWARDED_ID
+
+        private const val TEST_BANNER       = "ca-app-pub-3940256099942544/6300978111"
+        private const val TEST_INTERSTITIAL = "ca-app-pub-3940256099942544/1033173712"
+        private const val TEST_REWARDED     = "ca-app-pub-3940256099942544/5224354917"
+
+        @Provides
+        @Singleton
+        fun provideDatabase(@ApplicationContext context: Context): TimeWiseDatabase =
+            Room.databaseBuilder(context, TimeWiseDatabase::class.java, "timewise-database")
+                .addMigrations(MIGRATION_1_2)
+                .build()
+
+        @Provides
+        @Singleton
+        fun provideTaskDao(database: TimeWiseDatabase): TaskDao =
+            database.taskDao()
+
+        @Provides
+        @Singleton
+        fun provideTimeBlockDao(database: TimeWiseDatabase): TimeBlockDao =
+            database.timeBlockDao()
+
+        @Provides
+        @Singleton
+        fun provideEventDao(database: TimeWiseDatabase): EventDao =
+            database.eventDao()
+    }
 }

@@ -3,11 +3,11 @@ package com.timewise.app.ui.agenda
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.timewise.app.R
 import com.timewise.app.domain.model.Task
 import com.timewise.app.ui.agenda.components.AgendaDateHeader
@@ -16,6 +16,7 @@ import com.timewise.app.ui.agenda.components.AgendaLoadingIndicator
 import com.timewise.app.ui.agenda.components.AgendaModeSelector
 import com.timewise.app.ui.agenda.components.DailyAgendaList
 import com.timewise.app.ui.agenda.components.WeeklyAgendaList
+import com.timewise.app.ui.agenda.components.ads.BannerAdView
 
 @Composable
 fun AgendaScreen(
@@ -23,10 +24,12 @@ fun AgendaScreen(
     onAddTaskClick: () -> Unit = {},
     viewModel: AgendaViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val isPremium by viewModel.isPremium.collectAsStateWithLifecycle()
 
     AgendaContent(
         uiState = uiState,
+        isPremium = isPremium,
         onModeSelected = viewModel::setViewMode,
         onPreviousClick = viewModel::goToPreviousPeriod,
         onNextClick = viewModel::goToNextPeriod,
@@ -39,6 +42,7 @@ fun AgendaScreen(
 @Composable
 private fun AgendaContent(
     uiState: AgendaUiState,
+    isPremium: Boolean,
     onModeSelected: (AgendaViewMode) -> Unit,
     onPreviousClick: () -> Unit,
     onNextClick: () -> Unit,
@@ -94,5 +98,11 @@ private fun AgendaContent(
                 modifier = Modifier.fillMaxSize()
             )
         }
+
+        // Banner en el footer, oculto para usuarios premium
+        BannerAdView(
+            adUnitId = stringResource(R.string.admob_banner_agenda_id),
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }

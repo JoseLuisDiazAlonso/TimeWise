@@ -3,6 +3,7 @@ package com.timewise.app.ui.agenda
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.timewise.app.domain.model.Task
+import com.timewise.app.domain.repository.PremiumRepository
 import com.timewise.app.domain.usecase.GetTasksUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,7 +43,8 @@ data class AgendaUiState(
 
 @HiltViewModel
 class AgendaViewModel @Inject constructor(
-    private val getTasksUseCase: GetTasksUseCase
+    private val getTasksUseCase: GetTasksUseCase,
+    private val premiumRepository: PremiumRepository
 ) : ViewModel() {
 
     // Fuente del modo de vista seleccionado por el usuario (Diario/Semanal)
@@ -66,6 +68,14 @@ class AgendaViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
         initialValue = AgendaUiState(isLoading = true)
     )
+
+    // Estado premium expuesto como StateFlow, mismo patrón que uiState de arriba
+    val isPremium: StateFlow<Boolean> = premiumRepository.observeisPremium()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
+            initialValue = false
+        )
 
     fun setViewMode(mode: AgendaViewMode) {
         _viewMode.value = mode

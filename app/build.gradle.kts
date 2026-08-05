@@ -140,5 +140,7 @@ dependencies {
     implementation (libs.appcompat)
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
     implementation ("androidx.appcompat:appcompat:1.7.0")
+    implementation ("com.google.android.gms:play-services-ads:24.9.0")
+    implementation ("com.android.billingclient:billing-ktx:5.1.0")
 
 }
