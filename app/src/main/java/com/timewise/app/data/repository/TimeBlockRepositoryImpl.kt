@@ -3,9 +3,12 @@ package com.timewise.app.data.repository
 import com.timewise.app.data.local.dao.TimeBlockDao
 import com.timewise.app.data.local.entity.TimeBlockEntity
 import com.timewise.app.domain.model.TimeBlock
+import com.timewise.app.domain.model.TimeStatsPeriod
+import com.timewise.app.domain.model.TimeStatsSummary
 import com.timewise.app.domain.repository.TimeBlockRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalDate
 import javax.inject.Inject
 
 class TimeBlockRepositoryImpl @Inject constructor(
@@ -23,6 +26,28 @@ class TimeBlockRepositoryImpl @Inject constructor(
     override fun getByTask(taskId: Long): Flow<List<TimeBlock>> =
         timeBlockDao.getByTask(taskId).map { entities -> entities.map { it.toDomain() } }
 
+    override fun observeTimeBlocksForDate(date: LocalDate): Flow<List<TimeBlock>> {
+        return timeBlockDao.observeByDate(date).map { entities ->
+            entities.map { it.toDomain() }
+        }
+
+    }
+
+    override suspend fun getTimeBlockById(id: Long): TimeBlock? {
+        return timeBlockDao.getById(id)?.toDomain()
+    }
+
+    override suspend fun getOverlappingBlocks(
+        date: LocalDate,
+        startTime: Long,
+        endTime: Long,
+        excludeId: Any?
+    ): List<TimeBlock> {
+        val excludeIdLong = excludeId as? Long
+        return timeBlockDao.getOverlapping(date, startTime, endTime, excludeIdLong)
+            .map { it.toDomain() }
+    }
+
     override suspend fun insert(timeBlock: TimeBlock): Long =
         timeBlockDao.insert(TimeBlockEntity.fromDomain(timeBlock))
 
@@ -34,4 +59,14 @@ class TimeBlockRepositoryImpl @Inject constructor(
 
     override suspend fun deleteById(id: Long) =
         timeBlockDao.deleteById(id)
+
+    override suspend fun deleteTimeBlock(id: Long) {
+        // Implementación de la función deleteTimeBlock
+        // Puedes llamar a deleteById o realizar cualquier otra lógica necesaria
+        timeBlockDao.deleteById(id)
+    }
+
+    override fun observeByDateRange (startDate:LocalDate,
+                                     endDate: LocalDate) : Flow<List<TimeBlock>> =
+        timeBlockDao.observeByDateRange(startDate, endDate).map { entities -> entities.map { it.toDomain() } }
 }

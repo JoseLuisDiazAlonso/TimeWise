@@ -146,6 +146,16 @@
     <string name="premium_purchase_error">Purchase could not be completed. Please try again.</string>
     <string name="premium_already_subscribed">You already have an active subscription.</string>
     <string name="premium_terms">By subscribing you agree to our Terms of Use and Privacy Policy.</string>
+    <string name="time_blocking_title">Day Planning</string>
+    <string name="time_blocking_add_block">Add Block</string>
+    <string name="time_blocking_edit_block">Edit Block</string>
+    <string name="time_blocking_delete_block">Delete Block</string>
+    <string name="time_blocking_overlap_error">That time slot is already taken</string>
+    <string name="time_blocking_start_time">Start Time</string>
+    <string name="time_blocking_end_time">End Time</string>
+    <string name="time_blocking_category">Category</string>
+    <string name="time_blocking_premium_locked">Premium feature</string>
+    <string name="time_blocking_premium_message">Unlock visual planning with TimeWise Premium</string>
 
     <!-- ═══════════════════════════════════════════════ -->
     <!-- SETTINGS                                          -->
@@ -364,5 +374,16 @@
     <string name="ads_rewarded_watch_button">Watch ad to unlock</string>
     <string name="ads_rewarded_unavailable">Ad not available right now, try again later</string>
     <string name="ads_rewarded_loading">Loading ad...</string>
+
+
+    <!--PIECHART-->
+
+    <string name="stats_tab_weekly">Week</string>
+    <string name="stats_tab_monthly">Month</string>
+    <string name="stats_total_time">%1$s this week</string>
+    <string name="stats_no_data">No activity recorded for this period</string>
+    <string name="stats_previous_period_cd">Previous period</string>
+    <string name="stats_next_period_cd">Next period</string>
+    <string name="category_other">Other</string>
 
 </resources>

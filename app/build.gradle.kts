@@ -85,6 +85,8 @@ dependencies {
     implementation(libs.transport.api)
     implementation(libs.remote.creation.core)
     implementation(libs.espresso.core)
+    implementation(libs.uiautomator)
+    implementation(libs.uiautomator.v18)
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
     androidTestImplementation(composeBom)
@@ -142,5 +144,6 @@ dependencies {
     implementation ("androidx.appcompat:appcompat:1.7.0")
     implementation ("com.google.android.gms:play-services-ads:24.9.0")
     implementation ("com.android.billingclient:billing-ktx:5.1.0")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 }

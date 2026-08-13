@@ -4,7 +4,7 @@ package com.timewise.app.domain.model
 * A diferencia de Task (Tarea Pendiente) y TimeBlock (bloque visual de agenda),
 * Event no tiene estado "completado, ni prioridad.**/
 
-class Event (
+data class Event (
     val id: Long = 0,
     val title: String,
     val description: String = "",

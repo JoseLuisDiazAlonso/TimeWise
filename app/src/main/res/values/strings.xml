@@ -176,6 +176,17 @@
     <string name="premium_coming_soon" />
     <string name="premium_status_active" />
     <string name="premium_status_free" />
+    <string name="time_blocking_title">Planificación del día</string>
+    <string name="time_blocking_add_block">Añadir Bloque</string>
+    <string name="time_blocking_edit_block">Editar Bloque</string>
+    <string name="time_blocking_delete_block">Eliminar Bloque</string>
+    <string name="time_blocking_overlap_error">Ese horario ya está ocupado</string>
+    <string name="time_blocking_start_time">Hora de inicio</string>
+    <string name="time_blocking_end_time">Hora de fin</string>
+    <string name="time_blocking_category">Categoría</string>
+    <string name="time_blocking_premium_locked">Función Premium</string>
+    <string name="time_blocking_premium_message">Desbloquea la planificación visual con TimeWise Premium</string>
+
 
     <!-- ═══════════════════════════════════════════════ -->
     <!-- AJUSTES                                           -->
@@ -361,5 +372,15 @@
     <string name="ads_rewarded_loading">Cargando anuncio...</string>
     <string name="ads_rewarded_unlocked_badge">Desbloqueado-%1$d h</string>
     <string name="ads_rewarded_unavailable">Anuncio no disponible por ahora, inténtalo más tarde</string>
+
+
+    <!--PIECHART-->
+    <string name="stats_tab_weekly">Semana</string>
+    <string name="stats_tab_monthly">Mes</string>
+    <string name="stats_total_time">%1$s esta semana</string>
+    <string name="stats_no_data">Sin actividad registrada en este periodo</string>
+    <string name="stats_previous_period_cd">Periodo siguiente</string>
+    <string name="stats_next_period_cd">Periodo siguiente</string>
+    <string name="category_other">Otros</string>
 
 </resources>

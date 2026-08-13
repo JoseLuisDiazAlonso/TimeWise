@@ -38,4 +38,6 @@
     <string name="ads_rewarded_unlocked_badge" />
     <string name="ads_rewarded_cd_icon" />
     <string name="ads_rewarded_watch_button" />
+    <string name="stats_tab_weekly" />
+    <string name="stats_tab_monthly" />
 </resources>
