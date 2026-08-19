@@ -8,26 +8,18 @@ import androidx.sqlite.db.SupportSQLiteDatabase
  * Añade la tabla "events" sin tocar "tasks" ni "time_blocks", por lo que
  * los datos que el usuario ya tenga guardados se conservan intactos.
  */
-val MIGRATION_1_2 = object : Migration(1, 2) {
+val MIGRATION_2_3 = object : Migration(2, 3) {
     override fun migrate(db: SupportSQLiteDatabase) {
-        db.execSQL(
-            """
-            CREATE TABLE IF NOT EXISTS events (
+        db.execSQL("ALTER TABLE tasks ADD COLUMN updatedAt INTEGER NOT NULL DEFAULT 0")
+        db.execSQL("ALTER TABLE time_blocks ADD COLUMN updatedAt INTEGER NOT NULL DEFAULT 0")
+        db.execSQL("""
+            CREATE TABLE IF NOT EXISTS pending_changes (
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-                title TEXT NOT NULL,
-                description TEXT NOT NULL,
-                location TEXT,
-                startTime INTEGER NOT NULL,
-                endTime INTEGER NOT NULL,
-                isAllDay INTEGER NOT NULL,
-                reminderAt INTEGER,
-                colorHex TEXT NOT NULL,
-                isRecurring INTEGER NOT NULL,
-                recurrenceRule TEXT,
-                createdAt INTEGER NOT NULL,
-                updatedAt INTEGER NOT NULL
+                entityType TEXT NOT NULL,
+                entityId TEXT NOT NULL,
+                operation TEXT NOT NULL,
+                timestamp INTEGER NOT NULL
             )
-            """.trimIndent()
-        )
+        """)
     }
 }

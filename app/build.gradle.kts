@@ -86,7 +86,7 @@ dependencies {
     implementation(libs.remote.creation.core)
     implementation(libs.espresso.core)
     implementation(libs.uiautomator)
-    implementation(libs.uiautomator.v18)
+
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
     androidTestImplementation(composeBom)

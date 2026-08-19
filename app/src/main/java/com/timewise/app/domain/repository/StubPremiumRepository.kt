@@ -12,9 +12,9 @@ import javax.inject.Inject
  * PremiumRepository para devolver false.
  * **/
 
-abstract class StubPremiumRepository @Inject constructor() : PremiumRepository {
-    override val KEY_IS_PREMIUM: String? = null
-    override fun observeisPremium(): Flow<Boolean> {
+abstract class StubPremiumRepository: PremiumRepository {
+    val KEY_IS_PREMIUM: String? = null
+    fun observeisPremium(): Flow<Boolean> {
         return flowOf(false)
     }
 }

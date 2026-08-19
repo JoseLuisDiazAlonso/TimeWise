@@ -4,6 +4,7 @@ import androidx.room.*
 import com.timewise.app.data.local.entity.TimeBlockEntity
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
+import java.time.LocalTime
 
 @Dao
 interface TimeBlockDao {
@@ -37,8 +38,8 @@ interface TimeBlockDao {
     """)
     suspend fun getOverlapping(
         date: LocalDate,
-        start: Long,
-        end: Long,
+        start: LocalTime,
+        end: LocalTime,
         excludeId: Long?
     ): List<TimeBlockEntity>
 

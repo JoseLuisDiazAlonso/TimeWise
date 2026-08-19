@@ -19,7 +19,7 @@ class IsFeatureUnlockedUseCase @Inject constructor(
 ) {
     suspend fun execute() : Boolean {
 
-            val isPremium = premiumRepository.observeisPremium().first()
+            val isPremium = premiumRepository.observeIsPremium().first()
             val isUnlockActive = temporaryUnlockRepository.isUnlockActive()
             return isPremium || isUnlockActive
 

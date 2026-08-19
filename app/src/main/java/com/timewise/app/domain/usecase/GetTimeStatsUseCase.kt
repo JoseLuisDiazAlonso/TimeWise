@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 import javax.inject.Inject
+import java.time.Duration
 
 /**
  * El objetivo de esta clase es dado un periodo (SEMANAL/MENSUAL) y un fecha de referencia,
@@ -24,7 +25,10 @@ class GetTimeStatsUseCase @Inject constructor(
         referenceDate: LocalDate
     ): Flow<TimeStatsSummary> {
         val (start, end) = resolveRange(period, referenceDate)
-        return timeBlockRepository.observeTimeBlocksForDate(start).map{ blocks -> aggregate(period, start, end, blocks) }
+        return timeBlockRepository.observeByDateRange(start, end)
+            .map { blocks ->
+                aggregate(period, start, end, blocks)
+            }
     }
     private fun resolveRange(
         period: TimeStatsPeriod,
@@ -67,5 +71,5 @@ class GetTimeStatsUseCase @Inject constructor(
         )
     }
     private fun minutesOf(block: TimeBlock): Long =
-        (block.endTime - block.startTime) / 60_000L
+        Duration.between(block.startTime, block.endTime).toMillis() / 60_000L
 }

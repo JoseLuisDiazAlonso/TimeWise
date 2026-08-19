@@ -25,7 +25,7 @@ import com.timewise.app.ui.taskform.components.TaskTitleField
 @Composable
 fun TaskFormScreen (
     viewModel: TaskFormViewModel = hiltViewModel(),
-    onTaskSaved: @Composable () -> Unit
+    onTaskSaved: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 

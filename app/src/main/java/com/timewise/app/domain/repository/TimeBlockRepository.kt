@@ -1,10 +1,9 @@
 package com.timewise.app.domain.repository
 
 import com.timewise.app.domain.model.TimeBlock
-import com.timewise.app.domain.model.TimeStatsPeriod
-import com.timewise.app.domain.model.TimeStatsSummary
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
+import java.time.LocalTime
 
 interface TimeBlockRepository {
 
@@ -21,8 +20,8 @@ interface TimeBlockRepository {
 
     suspend fun getOverlappingBlocks(
         date: LocalDate,
-        startTime: Long,
-        endTime: Long,
+        startTime: LocalTime,
+        endTime: LocalTime,
         excludeId: Any? = null
     ): List<TimeBlock>
 

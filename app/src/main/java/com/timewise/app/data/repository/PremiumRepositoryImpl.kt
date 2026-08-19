@@ -12,27 +12,33 @@ import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 /**
- * Esta clase nos va a permitir que el estado premium siga disponible aunque la app arranque
- * sin conexión usando el último valor verificado.
-**/
-
-abstract class PremiumRepositoryImpl @Inject constructor(
+ * Permite que el estado premium siga disponible aunque la app arranque
+ * sin conexión, usando el último valor verificado y persistido.
+ */
+class PremiumRepositoryImpl @Inject constructor(
     private val billingRepository: BillingRepository,
     @ApplicationContext private val context: Context
-
 ) : PremiumRepository {
+
     private val prefs by lazy {
         context.getSharedPreferences("premium_prefs", Context.MODE_PRIVATE)
     }
-    fun observeIsPremium() : Flow<Boolean> =
+
+    override fun observeIsPremium(): Flow<Boolean> =
         billingRepository.observePurchaseState()
             .map { state -> state == PurchaseState.Purchased }
             .onEach { isPremium -> persistPremiumFlag(isPremium) }
             .onStart { emit(readPersistedFlag()) }
+
     override fun readPersistedFlag(): Boolean =
         prefs.getBoolean(KEY_IS_PREMIUM, false)
+
     override fun persistPremiumFlag(value: Boolean) {
         prefs.edit().putBoolean(KEY_IS_PREMIUM, value).apply()
     }
-   companion object {const val KEY_IS_PREMIUM = "key_is_Premium"}
+
+    private companion object {
+        const val KEY_IS_PREMIUM = "key_is_premium"
+    }
 }
+

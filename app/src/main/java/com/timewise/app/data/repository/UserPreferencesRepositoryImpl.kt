@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.map
 import androidx.datastore.preferences.core.Preferences
 import javax.inject.Inject
 import androidx.datastore.preferences.core.edit
+import com.timewise.app.core.di.UserPreferenceDataStore
 
 /**
  * Esta clase controla las preferencias del usuario
@@ -20,7 +21,7 @@ import androidx.datastore.preferences.core.edit
  * **/
 
 class UserPreferencesRepositoryImpl @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+   @UserPreferenceDataStore private val dataStore: DataStore<Preferences>
 ): UserPreferencesRepository {
     override suspend fun observeUserPreferences(): Flow<UserPreferences> =
         dataStore.data.map { prefs ->

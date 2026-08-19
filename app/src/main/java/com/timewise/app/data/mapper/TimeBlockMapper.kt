@@ -27,7 +27,8 @@ object TimeBlockMapper {
             isRecurring = this.isRecurring,
             recurrenceRule = this.recurrenceRule,
             isCompleted = this.isCompleted,
-            createdAt = this.createdAt
+            createdAt = this.createdAt,
+            updatedAt = System.currentTimeMillis()
         )
     }
 }

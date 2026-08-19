@@ -70,7 +70,7 @@ class AgendaViewModel @Inject constructor(
     )
 
     // Estado premium expuesto como StateFlow, mismo patrón que uiState de arriba
-    val isPremium: StateFlow<Boolean> = premiumRepository.observeisPremium()
+    val isPremium: StateFlow<Boolean> = premiumRepository.observeIsPremium()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),

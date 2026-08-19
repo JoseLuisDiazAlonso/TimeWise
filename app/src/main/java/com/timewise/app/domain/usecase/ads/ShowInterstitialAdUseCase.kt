@@ -13,7 +13,7 @@ import javax.inject.Inject
         private val premiumRepository: PremiumRepository
     ) {
         suspend fun execute(activity: Activity) {
-            val isPremiumUser = premiumRepository.observeisPremium().first()
+            val isPremiumUser = premiumRepository.observeIsPremium().first()
             if (isPremiumUser) return
 
             val lastShown = adFrequencyRepository.getLastShownTimestamp()

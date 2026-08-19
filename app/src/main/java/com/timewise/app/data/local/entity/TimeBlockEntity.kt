@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.timewise.app.domain.model.TimeBlock
 import java.time.LocalDate
+import java.time.LocalTime
 
 @Entity(tableName = "time_blocks")
 data class TimeBlockEntity(
@@ -12,8 +13,8 @@ data class TimeBlockEntity(
     val taskId: Long?,
     val title: String,
     val date: LocalDate,
-    val startTime: Long,
-    val endTime: Long,
+    val startTime: LocalTime,
+    val endTime: LocalTime,
     val colorHex: String,
     val isRecurring: Boolean,
     val recurrenceRule: String?,
@@ -31,7 +32,8 @@ data class TimeBlockEntity(
         isRecurring = isRecurring,
         recurrenceRule = recurrenceRule,
         isCompleted = isCompleted,
-        createdAt = createdAt
+        createdAt = createdAt,
+        updatedAt = System.currentTimeMillis()
     )
 
     companion object {

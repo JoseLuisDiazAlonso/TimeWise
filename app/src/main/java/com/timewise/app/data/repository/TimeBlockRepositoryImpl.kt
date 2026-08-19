@@ -3,12 +3,11 @@ package com.timewise.app.data.repository
 import com.timewise.app.data.local.dao.TimeBlockDao
 import com.timewise.app.data.local.entity.TimeBlockEntity
 import com.timewise.app.domain.model.TimeBlock
-import com.timewise.app.domain.model.TimeStatsPeriod
-import com.timewise.app.domain.model.TimeStatsSummary
 import com.timewise.app.domain.repository.TimeBlockRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.LocalDate
+import java.time.LocalTime
 import javax.inject.Inject
 
 class TimeBlockRepositoryImpl @Inject constructor(
@@ -39,8 +38,8 @@ class TimeBlockRepositoryImpl @Inject constructor(
 
     override suspend fun getOverlappingBlocks(
         date: LocalDate,
-        startTime: Long,
-        endTime: Long,
+        startTime: LocalTime,
+        endTime: LocalTime,
         excludeId: Any?
     ): List<TimeBlock> {
         val excludeIdLong = excludeId as? Long
