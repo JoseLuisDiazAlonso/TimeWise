@@ -43,6 +43,7 @@ remoteCreationCore = "1.0.0-alpha13"
 appcompat        = "1.7.0"
 uiautomator = "2.4.0"
 uiautomatorV18 = "2.2.0-alpha1"
+glanceAppwidget = "1.1.1"
 
 [libraries]
 androix-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
@@ -99,6 +100,7 @@ transport-api               = { group = "com.google.android.datatransport", name
 remote-creation-core = { group = "androidx.compose.remote", name = "remote-creation-core", version.ref = "remoteCreationCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
+glance-appwidget = { group = "androidx.glance", name = "glance-appwidget", version.ref = "glanceAppwidget" }
 
 
 [plugins]
