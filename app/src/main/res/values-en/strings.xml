@@ -124,7 +124,12 @@
     <string name="onboarding_step3_desc">Get timely notifications so you never miss a task or commitment.</string>
     <string name="onboarding_step4_title">Cloud sync</string>
     <string name="onboarding_step4_desc">With TimeWise Premium, access your agenda from any device. Your data always with you.</string>
-    <string name="onboarding_plans_title">Your Plans Title</string>
+    <string name="onboarding_language_title">Choose your language</string>
+    <string name="onboarding_language_desc">Select the language you want to use TimeWise in</string>
+    <string name="onboarding_notification_desc">Turn on notifications to get your reminders on time</string>
+    <string name="onboarding_notification_title">Never miss what matters</string>
+    <string name="onboarding_notification_granted">Notifications enabled!</string>
+    <string name="onboarding_plans_title">Choose how you want to use TimeWise</string>
 
     <!-- ═══════════════════════════════════════════════ -->
     <!-- PREMIUM / SUBSCRIPTION                           -->
@@ -146,6 +151,26 @@
     <string name="premium_purchase_error">Purchase could not be completed. Please try again.</string>
     <string name="premium_already_subscribed">You already have an active subscription.</string>
     <string name="premium_terms">By subscribing you agree to our Terms of Use and Privacy Policy.</string>
+    <string name="plan_free_title">Free</string>
+    <string name="plan_free_price">€0</string>
+    <string name="plan_free_feature1">Basic tasks and time blocks</string>
+    <string name="plan_free_feature2">Standard reminders</string>
+    <string name="plan_free_feature3">With ads</string>
+    <string name="plan_premium_title">Premium</string>
+    <string name="plan_premium_price">€2.99/month</string>
+    <string name="plan_premium_feature1">Ad-free</string>
+    <string name="plan_premium_feature2">Advanced statistics</string>
+    <string name="plan_premium_feature3">Home screen widget</string>
+    <string name="plan_free_feature_1">Basic tasks and time blocks</string>
+    <string name="plan_free_feature_2">Standard reminders</string>
+    <string name="plan_free_feature_3">With ads</string>
+    <string name="plan_premium_feature_1">Ad-free</string>
+    <string name="plan_premium_feature_2">Advanced statistics</string>
+    <string name="plan_premium_feature_3">Home screen widget</string>
+    <string name="plan_premium_feature_4">Export to PDF / CSV</string>
+    <string name="premium_coming_soon">Coming soon</string>
+    <string name="premium_status_active">Premium active</string>
+    <string name="premium_status_free">Free plan</string>
     <string name="time_blocking_title">Day Planning</string>
     <string name="time_blocking_add_block">Add Block</string>
     <string name="time_blocking_edit_block">Edit Block</string>
@@ -186,6 +211,14 @@
     <string name="settings_terms">Terms of use</string>
     <string name="settings_rate_app">Rate the app</string>
     <string name="settings_contact">Contact</string>
+    <string name="settings_section_language">Language</string>
+    <string name="settings_section_notifications">Notifications</string>
+    <string name="settings_notifications_enabled">Notifications enabled</string>
+    <string name="language_spanish">Spanish</string>
+    <string name="language_english">English</string>
+    <string name="settings_premium_cta">Go Premium</string>
+    <string name="settings_notifications_blocked_action">Enable in system Settings</string>
+    <string name="settings_section_premium">Premium</string>
 
     <!-- ═══════════════════════════════════════════════ -->
     <!-- ERRORS AND VALIDATION                            -->
@@ -323,41 +356,11 @@
     <string name="category_study">Study</string>
     <string name="category_health">Health</string>
     <string name="category_home">Home</string>
-    <string name="onboarding_language_title" />
-    <string name="onboarding_language_desc" />
-    <string name="onboarding_notification_desc" />
-    <string name="onboarding_notification_title" />
-    <string name="onboarding_notification_granted" />
-    <string name="plan_free_title" />
-    <string name="plan_free_price" />
-    <string name="plan_free_feature1" />
-    <string name="plan_free_feature2" />
-    <string name="plan_free_feature3" />
-    <string name="plan_premium_title" />
-    <string name="plan_premium_price" />
-    <string name="plan_premium_feature1" />
-    <string name="plan_premium_feature2" />
-    <string name="plan_premium_feature3" />
-    <string name="plan_free_feature_1" />
-    <string name="plan_free_feature_2" />
-    <string name="plan_free_feature_3" />
-    <string name="plan_premium_feature_1" />
-    <string name="plan_premium_feature_2" />
-    <string name="plan_premium_feature_3" />
-    <string name="plan_premium_feature_4" />
-    <string name="premium_coming_soon" />
-    <string name="settings_section_language" />
-    <string name="settings_section_notifications" />
-    <string name="settings_notifications_enabled" />
-    <string name="language_spanish">Spanish</string>
-    <string name="language_english">English</string>
-    <string name="premium_status_active" />
-    <string name="premium_status_free" />
-    <string name="settings_premium_cta" />
-    <string name="settings_notifications_blocked_action" />
-    <string name="settings_section_premium" />
-    <string name="admob_app_id" />
-    <string name="admob_banner_agenda_id" />
+
+    <!-- ⚠️ Google's official test ad unit IDs.
+         Replace with your real AdMob console IDs before publishing. -->
+    <string name="admob_app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_banner_agenda_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
 
     <!--BILLING-->
     <string name="billing_monthly_price">€2,99/month</string>
@@ -385,5 +388,13 @@
     <string name="stats_previous_period_cd">Previous period</string>
     <string name="stats_next_period_cd">Next period</string>
     <string name="category_other">Other</string>
+
+    <string name="widget_title">TimeWise</string>
+    <string name="widget_description">Today\'s tasks and next reminder</string>
+    <string name="widget_locked_message">Premium feature</string>
+    <string name="widget_locked_cta">Go Premium</string>
+    <string name="widget_empty_message">No tasks for today</string>
+    <string name="widget_next_reminder_label">Next up</string>
+    <string name="widget_more_tasks">+%1$d more</string>
 
 </resources>

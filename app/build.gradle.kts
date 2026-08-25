@@ -86,6 +86,7 @@ dependencies {
     implementation(libs.remote.creation.core)
     implementation(libs.espresso.core)
     implementation(libs.uiautomator)
+    implementation(libs.glance.appwidget)
 
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)

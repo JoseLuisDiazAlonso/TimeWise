@@ -129,11 +129,11 @@
     <string name="onboarding_step3_desc">Recibe notificaciones a tiempo para no olvidar ninguna tarea o compromiso.</string>
     <string name="onboarding_step4_title">Sincronización en la nube</string>
     <string name="onboarding_step4_desc">Con TimeWise Premium, accede a tu agenda desde cualquier dispositivo. Tus datos siempre contigo.</string>
-    <string name="onboarding_language_title" />
-    <string name="onboarding_language_desc" />
-    <string name="onboarding_notification_desc" />
-    <string name="onboarding_notification_title" />
-    <string name="onboarding_notification_granted" />
+    <string name="onboarding_language_title">Elige tu idioma</string>
+    <string name="onboarding_language_desc">Selecciona el idioma en el que quieres usar TimeWise</string>
+    <string name="onboarding_notification_desc">Activa las notificaciones para recibir tus recordatorios a tiempo</string>
+    <string name="onboarding_notification_title">No te pierdas nada importante</string>
+    <string name="onboarding_notification_granted">¡Notificaciones activadas!</string>
 
     <!-- ═══════════════════════════════════════════════ -->
     <!-- PREMIUM / SUSCRIPCIÓN                            -->
@@ -156,26 +156,26 @@
     <string name="premium_already_subscribed">Ya tienes una suscripción activa.</string>
     <string name="premium_terms">Al suscribirte aceptas los Términos de Uso y la Política de Privacidad.</string>
     <string name="onboarding_plans_title">Elige como quieres usar TimeWise</string>
-    <string name="plan_free_title" />
-    <string name="plan_free_price" />
-    <string name="plan_free_feature1" />
-    <string name="plan_free_feature2" />
-    <string name="plan_free_feature3" />
-    <string name="plan_premium_title" />
-    <string name="plan_premium_price" />
-    <string name="plan_premium_feature1" />
-    <string name="plan_premium_feature2" />
-    <string name="plan_premium_feature3" />
-    <string name="plan_free_feature_1" />
-    <string name="plan_free_feature_2" />
-    <string name="plan_free_feature_3" />
-    <string name="plan_premium_feature_1" />
-    <string name="plan_premium_feature_2" />
-    <string name="plan_premium_feature_3" />
-    <string name="plan_premium_feature_4" />
-    <string name="premium_coming_soon" />
-    <string name="premium_status_active" />
-    <string name="premium_status_free" />
+    <string name="plan_free_title">Gratis</string>
+    <string name="plan_free_price">0€</string>
+    <string name="plan_free_feature1">Tareas y bloques de tiempo básicos</string>
+    <string name="plan_free_feature2">Recordatorios estándar</string>
+    <string name="plan_free_feature3">Con publicidad</string>
+    <string name="plan_premium_title">Premium</string>
+    <string name="plan_premium_price">2,99€/mes</string>
+    <string name="plan_premium_feature1">Sin anuncios</string>
+    <string name="plan_premium_feature2">Estadísticas avanzadas</string>
+    <string name="plan_premium_feature3">Widget de escritorio</string>
+    <string name="plan_free_feature_1">Tareas y bloques de tiempo básicos</string>
+    <string name="plan_free_feature_2">Recordatorios estándar</string>
+    <string name="plan_free_feature_3">Con publicidad</string>
+    <string name="plan_premium_feature_1">Sin anuncios</string>
+    <string name="plan_premium_feature_2">Estadísticas avanzadas</string>
+    <string name="plan_premium_feature_3">Widget de escritorio</string>
+    <string name="plan_premium_feature_4">Exportación a PDF / CSV</string>
+    <string name="premium_coming_soon">Próximamente</string>
+    <string name="premium_status_active">Premium activo</string>
+    <string name="premium_status_free">Plan gratuito</string>
     <string name="time_blocking_title">Planificación del día</string>
     <string name="time_blocking_add_block">Añadir Bloque</string>
     <string name="time_blocking_edit_block">Editar Bloque</string>
@@ -217,15 +217,15 @@
     <string name="settings_terms">Términos de uso</string>
     <string name="settings_rate_app">Valorar la app</string>
     <string name="settings_contact">Contacto</string>
-    <string name="settings_section_language" />
-    <string name="settings_section_notifications" />
-    <string name="settings_notifications_enabled" />
+    <string name="settings_section_language">Idioma</string>
+    <string name="settings_section_notifications">Notificaciones</string>
+    <string name="settings_notifications_enabled">Notificaciones activadas</string>
     <string name="language_spanish">Español</string>
     <string name="language_english">Inglés</string>
 
-    <string name="settings_premium_cta" />
-    <string name="settings_notifications_blocked_action" />
-    <string name="settings_section_premium" />
+    <string name="settings_premium_cta">Hazte Premium</string>
+    <string name="settings_notifications_blocked_action">Activar en Ajustes del sistema</string>
+    <string name="settings_section_premium">Premium</string>
 
     <!-- ═══════════════════════════════════════════════ -->
     <!-- ERRORES Y VALIDACIÓN                             -->
@@ -356,8 +356,11 @@
     <string name="search_hint">Buscar tareas…</string>
     <string name="search_no_results">No se encontraron resultados para "%1$s"</string>
     <string name="search_clear">Limpiar búsqueda</string>
-    <string name="admob_app_id" />
-    <string name="admob_banner_agenda_id" />
+
+    <!-- ⚠️ IDs de prueba de Google (test ad unit IDs oficiales).
+         Sustitúyelos por los tuyos reales de la consola de AdMob antes de publicar. -->
+    <string name="admob_app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_banner_agenda_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
 
     <!--BILLING MODULE-->
     <string name="billing_monthly_price">€2,99/mes</string>
@@ -382,5 +385,14 @@
     <string name="stats_previous_period_cd">Periodo siguiente</string>
     <string name="stats_next_period_cd">Periodo siguiente</string>
     <string name="category_other">Otros</string>
+
+    <!--Aquí viene la parte del Widget-->
+    <string name="widget_title">TimeWise</string>
+    <string name="widget_description">Tareas de hoy y próximo recordatorio</string>
+    <string name="widget_locked_message">Función Premium</string>
+    <string name="widget_locked_cta">Hazte Premium</string>
+    <string name="widget_empty_message">Sin tareas para hoy</string>
+    <string name="widget_next_reminder_label">Próximo</string>
+    <string name="widget_more_tasks">+%1$d más</string>
 
 </resources>
