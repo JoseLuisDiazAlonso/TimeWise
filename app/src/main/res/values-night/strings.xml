@@ -40,4 +40,7 @@
     <string name="ads_rewarded_watch_button" />
     <string name="stats_tab_weekly" />
     <string name="stats_tab_monthly" />
+    <string name="export_success" />
+    <string name="export_error" />
+    <string name="export_button" />
 </resources>

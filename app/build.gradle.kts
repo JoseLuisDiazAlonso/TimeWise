@@ -88,6 +88,7 @@ dependencies {
     implementation(libs.uiautomator)
     implementation(libs.glance.appwidget)
 
+
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
     androidTestImplementation(composeBom)

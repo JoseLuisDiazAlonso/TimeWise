@@ -1,5 +1,7 @@
 package com.timewise.app.domain.usecase
 
+// ❌ import android.util.Pair  <-- ESTE import ha sido el culpable de todos los errores. Fuera.
+
 import com.timewise.app.domain.model.CategoryTimeStats
 import com.timewise.app.domain.model.TimeBlock
 import com.timewise.app.domain.model.TimeStatsPeriod
@@ -7,9 +9,9 @@ import com.timewise.app.domain.model.TimeStatsSummary
 import com.timewise.app.domain.repository.TimeBlockRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.Duration
 import java.time.LocalDate
 import javax.inject.Inject
-import java.time.Duration
 
 /**
  * El objetivo de esta clase es dado un periodo (SEMANAL/MENSUAL) y un fecha de referencia,
@@ -30,10 +32,13 @@ class GetTimeStatsUseCase @Inject constructor(
                 aggregate(period, start, end, blocks)
             }
     }
+
     private fun resolveRange(
         period: TimeStatsPeriod,
         referenceDate: LocalDate
     ): Pair<LocalDate, LocalDate> = when (period) {
+        // Este "Pair" ahora es kotlin.Pair (se resuelve automáticamente,
+        // no hace falta importarlo) -> por eso funcionan component1()/component2() y "to"
         TimeStatsPeriod.SEMANAL -> {
             val start = referenceDate.with(java.time.DayOfWeek.MONDAY)
             start to start.plusDays(6)
@@ -43,6 +48,7 @@ class GetTimeStatsUseCase @Inject constructor(
             start to referenceDate.withDayOfMonth(referenceDate.lengthOfMonth())
         }
     }
+
     private fun aggregate(
         period: TimeStatsPeriod,
         start: LocalDate,
@@ -70,6 +76,7 @@ class GetTimeStatsUseCase @Inject constructor(
             totalTrackedMinutes = totalMinutes
         )
     }
+
     private fun minutesOf(block: TimeBlock): Long =
         Duration.between(block.startTime, block.endTime).toMillis() / 60_000L
 }

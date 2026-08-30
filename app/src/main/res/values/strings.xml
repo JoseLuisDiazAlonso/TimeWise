@@ -395,4 +395,16 @@
     <string name="widget_next_reminder_label">Próximo</string>
     <string name="widget_more_tasks">+%1$d más</string>
 
+    <!--Aquí van los valores para la exportación en pdf-->
+    <string name="export_button">Exportar informe PDF</string>
+    <string name="export_success">Informe exportado correctamente</string>
+    <string name="export_error_prefix">No se pudo exportar:</string>
+    <string name="export_premium_required_title">Función Premium</string>
+    <string name="export_premium_required_body">La exportación de informes en PDF es una función Premium.</string>
+    <string name="export_report_title">TimeWise — Informe semanal</string>
+    <string name="export_column_category">Categoría</string>
+    <string name="export_column_time">Tiempo</string>
+    <string name="export_column_percentage">% del total</string>
+    <string name="export_row_total">Total</string>
+
 </resources>

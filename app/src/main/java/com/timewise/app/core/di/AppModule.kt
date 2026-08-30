@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.timewise.app.data.local.TimeWiseDatabase
 import com.timewise.app.data.local.dao.TaskDao
 import com.timewise.app.data.local.dao.TimeBlockDao
+import com.timewise.app.data.repository.ExportStatsReportRepositoryImpl
+import com.timewise.app.domain.repository.ExportStatsReportRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,4 +36,8 @@ object AppModule {
     @Singleton
     fun provideTimeBlockDao(database: TimeWiseDatabase): TimeBlockDao =
         database.timeBlockDao()
+    @Provides
+    fun provideExportStatsReportRepository (
+        impl: ExportStatsReportRepositoryImpl
+    ): ExportStatsReportRepository = impl
 }
