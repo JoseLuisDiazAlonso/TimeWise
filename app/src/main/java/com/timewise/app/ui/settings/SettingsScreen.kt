@@ -1,7 +1,6 @@
 package com.timewise.app.ui.settings
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -22,7 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.timewise.app.R
 import com.timewise.app.domain.model.AppLanguage
-
+import com.timewise.app.ui.common.ResponsiveScrollableScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,38 +45,44 @@ fun SettingsScreen(
             )
         }
     ) { padding ->
-        Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+        // ResponsiveScrollableScreen en vez de Column suelto: igual que en
+        // Paywall, el contenido es de longitud variable (AppLanguage.entries
+        // más adelante podría crecer, y las secciones de Notificaciones/Premium
+        // se van sumando debajo) -> sin scroll, en landscape con poca altura
+        // las últimas filas (Premium, por ejemplo) podrían quedar cortadas.
+        ResponsiveScrollableScreen(modifier = Modifier.padding(padding)) {
+            Column {
+                SettingsSectionHeader(stringResource(R.string.settings_section_language))
+                AppLanguage.entries.forEach { language ->
+                    LanguageOptionRow(
+                        language = language,
+                        selected = uiState.language == language,
+                        onClick = { viewModel.onLanguageSelected(language) }
+                    )
+                }
 
-            SettingsSectionHeader(stringResource(R.string.settings_section_language))
-            AppLanguage.entries.forEach { language ->
-                LanguageOptionRow(
-                    language = language,
-                    selected = uiState.language == language,
-                    onClick = { viewModel.onLanguageSelected(language) }
+                HorizontalDivider()
+                SettingsSectionHeader(stringResource(R.string.settings_section_notifications))
+                SettingsSwitchRow(
+                    title = stringResource(R.string.settings_notifications_enabled),
+                    checked = uiState.notificationsEnabled,
+                    onCheckedChange = viewModel::onNotificationsToggled
+                )
+                if (uiState.systemNotificationsBlocked) {
+                    TextButton(onClick = {
+                        context.startActivity(viewModel.openSystemNotificationSettings(context))
+                    }) {
+                        Text(stringResource(R.string.settings_notifications_blocked_action))
+                    }
+                }
+
+                HorizontalDivider()
+                SettingsSectionHeader(stringResource(R.string.settings_section_premium))
+                PremiumStatusCard(
+                    isPremium = uiState.isPremium,
+                    onClick = onNavigateToPremium
                 )
             }
-
-            HorizontalDivider()
-            SettingsSectionHeader(stringResource(R.string.settings_section_notifications))
-            SettingsSwitchRow(
-                title = stringResource(R.string.settings_notifications_enabled),
-                checked = uiState.notificationsEnabled,
-                onCheckedChange = viewModel::onNotificationsToggled
-            )
-            if (uiState.systemNotificationsBlocked) {
-                TextButton(onClick = {
-                    context.startActivity(viewModel.openSystemNotificationSettings(context))
-                }) {
-                    Text(stringResource(R.string.settings_notifications_blocked_action))
-                }
-            }
-
-            HorizontalDivider()
-            SettingsSectionHeader(stringResource(R.string.settings_section_premium))
-            PremiumStatusCard(
-                isPremium = uiState.isPremium,
-                onClick = onNavigateToPremium
-            )
         }
     }
 }

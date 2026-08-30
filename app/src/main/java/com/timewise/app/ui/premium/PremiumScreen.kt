@@ -1,7 +1,6 @@
 package com.timewise.app.ui.premium
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -18,16 +17,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.timewise.app.R
+import com.timewise.app.ui.common.ResponsiveScrollableScreen
 
 /**
  * Este archivo lo que hará es configurar la pantalla para seleccionar entre la opción de Premium
  * o freemium.
- ***/
-
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PremiumScreen(onNavigateBack: () -> Unit) {
-    Scaffold (
+    Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.premium_title)) },
@@ -38,17 +37,17 @@ fun PremiumScreen(onNavigateBack: () -> Unit) {
                 }
             )
         }
-    ) {padding ->
-        Column (
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(stringResource(R.string.premium_coming_soon),
-                style = MaterialTheme.typography.bodyLarge
-            )
+    ) { padding ->
+        ResponsiveScrollableScreen(modifier = Modifier.padding(padding)) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    stringResource(R.string.premium_coming_soon),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
         }
     }
 }

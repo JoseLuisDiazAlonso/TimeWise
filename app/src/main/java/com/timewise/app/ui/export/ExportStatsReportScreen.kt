@@ -17,12 +17,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.timewise.app.R
+import com.timewise.app.ui.common.ResponsiveScrollableScreen
 
 /**
  * Composable que lanza el selector SAF, filtra el caso 'cancelado' (uri null) sin tocar
@@ -70,15 +72,24 @@ fun ExportStatsReportScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->
-        Column(modifier = Modifier.padding(padding)) {
-            Button(
-                onClick = { launcher.launch("TimeWise_Informe_Semanal.pdf") },
-                enabled = uiState !is ExportUiState.Loading
+        // ResponsiveScrollableScreen sustituye al Column suelto de nivel superior:
+        // esta pantalla es de contenido fijo (un único botón), no una lista, así
+        // que aquí SÍ corresponde el wrapper con scroll + ancho máximo centrado
+        // (el mismo patrón ya aplicado en TaskFormScreen).
+        ResponsiveScrollableScreen(modifier = Modifier.padding(padding)) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (uiState is ExportUiState.Loading) {
-                    CircularProgressIndicator(modifier = Modifier.size(18.dp))
-                } else {
-                    Text(stringResource(R.string.export_button))
+                Button(
+                    onClick = { launcher.launch("TimeWise_Informe_Semanal.pdf") },
+                    enabled = uiState !is ExportUiState.Loading
+                ) {
+                    if (uiState is ExportUiState.Loading) {
+                        CircularProgressIndicator(modifier = Modifier.size(18.dp))
+                    } else {
+                        Text(stringResource(R.string.export_button))
+                    }
                 }
             }
         }

@@ -31,6 +31,7 @@ fun OnboardingBottomBar(
     totalPages: Int,
     onSkipClick: () -> Unit,
     onNextClick: () -> Unit,
+    modifier: Modifier,
 ) {
     val isLastPage = currentPage == totalPages - 1
     Row (

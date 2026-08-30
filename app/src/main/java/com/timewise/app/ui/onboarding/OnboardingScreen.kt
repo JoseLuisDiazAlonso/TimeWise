@@ -2,16 +2,16 @@ package com.timewise.app.ui.onboarding
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.timewise.app.ui.common.MAX_CONTENT_WIDTH
 import kotlinx.coroutines.launch
-
-
 
 /*
 Esta clase se utilizará para en lugar de crear 4 rutas de navegación diferentes crear
@@ -29,6 +29,11 @@ fun OnboardingScreen(
     val scope = rememberCoroutineScope()
 
     Column(modifier = Modifier.fillMaxSize()) {
+        // El Pager se deja a ancho completo (sin widthIn): cada página interna
+        // (WelcomePage, PlansPage...) puede tener su propia imagen o fondo que
+        // sí conviene que ocupe todo el ancho en tablet. El límite de ancho
+        // para el TEXTO/botones de cada slide se aplica dentro de esas páginas,
+        // no aquí en el contenedor.
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.weight(1f)
@@ -40,6 +45,10 @@ fun OnboardingScreen(
                 else -> PlansPage()
             }
         }
+
+        // La barra de navegación (indicador de página + botones) sí se limita
+        // y centra: en tablet ancha, unos botones de "Siguiente/Saltar" a todo
+        // el ancho de la pantalla se verían desproporcionados.
         OnboardingBottomBar(
             currentPage = pagerState.currentPage,
             totalPages = TOTAL_PAGES,
@@ -52,7 +61,10 @@ fun OnboardingScreen(
                         pagerState.animateScrollToPage(pagerState.currentPage + 1)
                     }
                 }
-            }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .widthIn(max = MAX_CONTENT_WIDTH)
         )
     }
 }
