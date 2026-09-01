@@ -15,21 +15,26 @@ fun AgendaModeSelector(
     onModeSelected: (AgendaViewMode) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val selectedIndex = if (selectedMode == AgendaViewMode.DAILY) 0 else 1
-
+    // El enum ya está en el mismo orden que los tabs (DAILY, WEEKLY, ALL),
+    // así que el ordinal sirve directamente como índice seleccionado.
     TabRow(
-        selectedTabIndex = selectedIndex,
+        selectedTabIndex = selectedMode.ordinal,
         modifier = modifier
     ) {
         Tab(
-            selected = selectedIndex == 0,
+            selected = selectedMode == AgendaViewMode.DAILY,
             onClick = { onModeSelected(AgendaViewMode.DAILY) },
             text = { Text(stringResource(R.string.agenda_mode_daily)) }
         )
         Tab(
-            selected = selectedIndex == 1,
+            selected = selectedMode == AgendaViewMode.WEEKLY,
             onClick = { onModeSelected(AgendaViewMode.WEEKLY) },
             text = { Text(stringResource(R.string.agenda_mode_weekly)) }
+        )
+        Tab(
+            selected = selectedMode == AgendaViewMode.ALL,
+            onClick = { onModeSelected(AgendaViewMode.ALL) },
+            text = { Text(stringResource(R.string.agenda_mode_all)) }
         )
     }
 }

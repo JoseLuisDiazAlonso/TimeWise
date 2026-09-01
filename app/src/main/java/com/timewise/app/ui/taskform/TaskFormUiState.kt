@@ -20,4 +20,5 @@ data class TaskFormUiState (
     val categoryOption: CategoryOption = availableCategories.first(),
     val isSaving: Boolean = false,
     val isSaved: Boolean = false,
+    val isDeleted: Boolean = false
 )

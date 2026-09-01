@@ -39,10 +39,12 @@ class BillingRepositoryImpl @Inject constructor(
     private val billingClient = BillingClient.newBuilder(context)
         .setListener(this)
         .enablePendingPurchases(
-            PendingPurchasesParams.newBuilder().enablePrepaidPlans().build()
+            PendingPurchasesParams.newBuilder()
+                .enableOneTimeProducts()
+                .enablePrepaidPlans()
+                .build()
         )
         .build()
-
     init {
         startConnection()
     }

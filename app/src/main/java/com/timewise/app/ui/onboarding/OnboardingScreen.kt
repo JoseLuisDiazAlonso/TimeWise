@@ -1,9 +1,12 @@
 package com.timewise.app.ui.onboarding
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
@@ -13,12 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.timewise.app.ui.common.MAX_CONTENT_WIDTH
 import kotlinx.coroutines.launch
 
-/*
-Esta clase se utilizará para en lugar de crear 4 rutas de navegación diferentes crear
-una sola ruta de navegación con 7 páginas internas
-*/
-
-private const val TOTAL_PAGES = 7
+private const val TOTAL_PAGES = 6
 
 @Composable
 fun OnboardingScreen(
@@ -28,27 +26,23 @@ fun OnboardingScreen(
     val pagerState = rememberPagerState(pageCount = { TOTAL_PAGES })
     val scope = rememberCoroutineScope()
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        // El Pager se deja a ancho completo (sin widthIn): cada página interna
-        // (WelcomePage, PlansPage...) puede tener su propia imagen o fondo que
-        // sí conviene que ocupe todo el ancho en tablet. El límite de ancho
-        // para el TEXTO/botones de cada slide se aplica dentro de esas páginas,
-        // no aquí en el contenedor.
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.safeDrawing)
+    ) {
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.weight(1f)
         ) { page ->
             when (page) {
-                0, 1, 2, 3 -> WelcomePage(step = page)
-                4 -> LanguageSelectorPage()
-                5 -> NotificationPermissionPage()
+                0 -> LanguageSelectorPage()
+                1, 2, 3 -> WelcomePage(step = page - 1)
+                4 -> NotificationPermissionPage()
                 else -> PlansPage()
             }
         }
 
-        // La barra de navegación (indicador de página + botones) sí se limita
-        // y centra: en tablet ancha, unos botones de "Siguiente/Saltar" a todo
-        // el ancho de la pantalla se verían desproporcionados.
         OnboardingBottomBar(
             currentPage = pagerState.currentPage,
             totalPages = TOTAL_PAGES,

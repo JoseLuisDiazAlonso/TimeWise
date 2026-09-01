@@ -13,6 +13,7 @@ import com.timewise.app.domain.model.Task
 fun DailyAgendaList(
     tasks: List<Task>,
     onTaskClick: (Task) -> Unit,
+    onToggleComplete: (Task) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -21,7 +22,7 @@ fun DailyAgendaList(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(items = tasks, key = { it.id }) { task ->
-            TaskAgendaItem(task = task, onClick = onTaskClick)
+            TaskAgendaItem(task = task, onClick = onTaskClick, onToggleComplete = onToggleComplete)
         }
     }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+
+    <!-- Círculo de fondo suave, mismo estilo que los circulos claros del mockup -->
+    <path
+        android:fillColor="#1F3949AB"
+        android:pathData="M2,48 a46,46 0 1,0 92,0 a46,46 0 1,0 -92,0" />
+
+    <!-- Anillo intermedio (diana) -->
+    <path
+        android:fillColor="#403949AB"
+        android:pathData="M14,48 a34,34 0 1,0 68,0 a34,34 0 1,0 -68,0" />
+
+    <!-- Anillo interior -->
+    <path
+        android:fillColor="#733949AB"
+        android:pathData="M26,48 a22,22 0 1,0 44,0 a22,22 0 1,0 -44,0" />
+
+    <!-- Centro sólido -->
+    <path
+        android:fillColor="#3949AB"
+        android:pathData="M38,48 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0" />
+</vector>

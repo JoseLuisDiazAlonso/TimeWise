@@ -25,6 +25,7 @@ import java.util.Locale
 fun WeeklyAgendaList(
     tasksByDay: Map<LocalDate, List<Task>>,
     onTaskClick: (Task) -> Unit,
+    onToggleComplete: (Task) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -49,7 +50,7 @@ fun WeeklyAgendaList(
             } else {
                 items(items = tasks, key = { it.id }) { task ->
                     Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)) {
-                        TaskAgendaItem(task = task, onClick = onTaskClick)
+                        TaskAgendaItem(task = task, onClick = onTaskClick, onToggleComplete = onToggleComplete)
                     }
                 }
             }

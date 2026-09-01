@@ -93,5 +93,7 @@ private fun formatDateLabel(
                 "${start.dayOfMonth} $startMonth - ${end.dayOfMonth} $endMonth"
             }
         }
+
+        AgendaViewMode.ALL -> TODO()
     }
 }

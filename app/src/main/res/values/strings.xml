@@ -40,6 +40,9 @@
     <string name="agenda_mode_weekly">Semanal</string>
     <string name="cd_agenda_previous">Periodo anterior</string>
     <string name="cd_agenda_next">Periodo siguiente</string>
+    <string name="agenda_mode_all">Todas</string>
+    <string name="agenda_progress_pending">%1$d de %2$d pendientes</string>
+    <string name="agenda_empty_all_state">No tienes tareas creadas todavía</string>
 
     <!-- ═══════════════════════════════════════════════ -->
     <!-- GESTIÓN DE TAREAS                                -->
@@ -406,5 +409,13 @@
     <string name="export_column_time">Tiempo</string>
     <string name="export_column_percentage">% del total</string>
     <string name="export_row_total">Total</string>
+
+    <string name="task_new_title">Nueva tarea</string>
+    <string name="task_edit_title">Editar tarea</string>
+    <string name="task_delete_action">Eliminar tarea</string>
+    <string name="task_delete_confirm_title">¿Eliminar esta tarea?</string>
+    <string name="task_delete_confirm_message">Esta acción no se puede deshacer.</string>
+    <string name="task_delete_confirm_action">Eliminar</string>
+    <string name="cancel">Cancelar</string> <!-- puede que ya exista, revisa antes de duplicar -->
 
 </resources>

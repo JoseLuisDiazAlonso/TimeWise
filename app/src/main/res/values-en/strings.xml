@@ -31,6 +31,9 @@
     <string name="time_block_duration">Duration: %1$s</string>
     <string name="time_block_overlap_error">This time slot overlaps with another block</string>
     <string name="time_block_saved">Block saved successfully</string>
+    <string name="agenda_mode_all">All</string>
+    <string name="agenda_progress_pending">%1$d of %2$d pending</string>
+    <string name="agenda_empty_all_state">You don\'t have any tasks yet</string>
 
     <!-- Daily / Weekly Agenda (Card #7) -->
     <string name="agenda_empty_daily_state">You have no tasks scheduled for this day</string>

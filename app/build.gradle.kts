@@ -87,6 +87,8 @@ dependencies {
     implementation(libs.espresso.core)
     implementation(libs.uiautomator)
     implementation(libs.glance.appwidget)
+    implementation(libs.hilt.testing)
+    testImplementation(libs.hilt.testing)
 
 
     val composeBom = platform(libs.compose.bom)
@@ -131,9 +133,12 @@ dependencies {
     implementation(libs.splashscreen)
     implementation(libs.lottie.compose)
 
-    testImplementation(libs.junit)
-    testImplementation(libs.coroutines.test)
-    testImplementation(libs.mockk)
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("io.mockk:mockk:1.13.13")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+    testImplementation("androidx.test.ext:junit:1.1.5")
+    testImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
     androidTestImplementation(libs.junit.android)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.compose.ui.test.junit4)
@@ -147,5 +152,6 @@ dependencies {
     implementation ("com.google.android.gms:play-services-ads:24.9.0")
     implementation ("com.android.billingclient:billing-ktx:5.1.0")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 
 }

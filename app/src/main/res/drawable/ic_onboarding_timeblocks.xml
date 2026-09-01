@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+
+    <!-- Círculo de fondo suave -->
+    <path
+        android:fillColor="#1F3949AB"
+        android:pathData="M2,48 a46,46 0 1,0 92,0 a46,46 0 1,0 -92,0" />
+
+    <!-- Cuerpo del calendario -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M24,30 h48 a6,6 0 0 1 6,6 v36 a6,6 0 0 1 -6,6 h-48 a6,6 0 0 1 -6,-6 v-36 a6,6 0 0 1 6,-6 Z" />
+
+    <!-- Cabecera del calendario -->
+    <path
+        android:fillColor="#3949AB"
+        android:pathData="M24,30 h48 a6,6 0 0 1 6,6 v6 h-60 v-6 a6,6 0 0 1 6,-6 Z" />
+
+    <!-- Anillas superiores -->
+    <path
+        android:fillColor="#3949AB"
+        android:pathData="M34,24 h4 a2,2 0 0 1 2,2 v8 a2,2 0 0 1 -2,2 h-4 a2,2 0 0 1 -2,-2 v-8 a2,2 0 0 1 2,-2 Z" />
+    <path
+        android:fillColor="#3949AB"
+        android:pathData="M58,24 h4 a2,2 0 0 1 2,2 v8 a2,2 0 0 1 -2,2 h-4 a2,2 0 0 1 -2,-2 v-8 a2,2 0 0 1 2,-2 Z" />
+
+    <!-- Bloques de tiempo dentro del calendario, usando los colores de categoría de Color.kt -->
+    <path
+        android:fillColor="#1565C0"
+        android:pathData="M30,50 h36 a3,3 0 0 1 3,3 v0 a3,3 0 0 1 -3,3 h-36 a3,3 0 0 1 -3,-3 v0 a3,3 0 0 1 3,-3 Z" />
+    <path
+        android:fillColor="#00897B"
+        android:pathData="M30,60 h24 a3,3 0 0 1 3,3 v0 a3,3 0 0 1 -3,3 h-24 a3,3 0 0 1 -3,-3 v0 a3,3 0 0 1 3,-3 Z" />
+    <path
+        android:fillColor="#E65100"
+        android:pathData="M30,70 h30 a3,3 0 0 1 3,3 v0 a3,3 0 0 1 -3,3 h-30 a3,3 0 0 1 -3,-3 v0 a3,3 0 0 1 3,-3 Z" />
+</vector>

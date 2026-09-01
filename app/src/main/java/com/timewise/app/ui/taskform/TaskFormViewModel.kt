@@ -1,13 +1,11 @@
 package com.timewise.app.ui.taskform
 
-/**Esta es la clase que recibe los eventos del usuario y los pasa al caso de uso correspondiente*/
-
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.timewise.app.domain.model.Priority
-
 import com.timewise.app.domain.usecase.CreateTaskUseCase
+import com.timewise.app.domain.usecase.DeleteTaskUseCase
 import com.timewise.app.domain.usecase.GetTaskByIdUseCase
 import com.timewise.app.domain.usecase.UpdateTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,15 +25,15 @@ class TaskFormViewModel @Inject constructor(
     private val getTaskByIdUseCase: GetTaskByIdUseCase,
     private val createTaskUseCase: CreateTaskUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase,
+    private val deleteTaskUseCase: DeleteTaskUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-   private val _uiState = MutableStateFlow(TaskFormUiState())
+    private val _uiState = MutableStateFlow(TaskFormUiState())
     val uiState: StateFlow<TaskFormUiState> = _uiState.asStateFlow()
 
     init {
         val id: Long? = savedStateHandle["taskId"]
         if (id != null) loadTask(id)
-
     }
 
     private fun loadTask(id: Long) {
@@ -51,11 +49,8 @@ class TaskFormViewModel @Inject constructor(
                     categoryOption = availableCategories.find { category -> category.id.toLong() == it.categoryId }
                         ?: availableCategories.first()
                 )
-
             }
-
         }
-
     }
 
     fun onTitleChanged(newTitle: String) {
@@ -78,7 +73,6 @@ class TaskFormViewModel @Inject constructor(
                     currentState.priority,
                     currentState.categoryOption.id.toLong()
                 )
-
             } else {
                 updateTaskUseCase(
                     currentState.id,
@@ -91,10 +85,18 @@ class TaskFormViewModel @Inject constructor(
             }
             _uiState.update {
                 it.copy(isSaving = false, isSaved = true)
-
             }
         }
     }
+
+    fun onDeleteClicked() {
+        val id = _uiState.value.id ?: return // no hay nada que borrar en modo creación
+        viewModelScope.launch {
+            deleteTaskUseCase(id)
+            _uiState.update { it.copy(isDeleted = true) }
+        }
+    }
+
     fun onDueDateChanged(newDate: LocalDate?) {
         _uiState.value = _uiState.value.copy(dueDate = newDate)
     }
@@ -107,5 +109,4 @@ class TaskFormViewModel @Inject constructor(
     fun onCategoryChanged(newCategory: CategoryOption) {
         _uiState.value = _uiState.value.copy(categoryOption = newCategory)
     }
-
 }

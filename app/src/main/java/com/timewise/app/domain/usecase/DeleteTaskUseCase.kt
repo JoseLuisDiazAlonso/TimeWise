@@ -4,7 +4,9 @@ import com.timewise.app.domain.repository.TaskRepository
 import javax.inject.Inject
 
 class DeleteTaskUseCase @Inject constructor(
-    private val repository: TaskRepository
+    private val taskRepository: TaskRepository
 ) {
-    suspend operator fun invoke (taskId: Long) = repository.deleteById(taskId)
+    suspend operator fun invoke(taskId: Long) {
+        taskRepository.deleteById(taskId)
+    }
 }

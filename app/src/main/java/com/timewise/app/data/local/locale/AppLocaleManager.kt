@@ -1,20 +1,18 @@
 package com.timewise.app.data.local.locale
 
-
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
+import android.content.Context
 import com.timewise.app.domain.model.AppLanguage
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 /**
- * Esta clase lo que hará es controlar el idioma que seleccione el usuario y mostrarlo.
- *
- * **/
-
-class AppLocaleManager @Inject constructor(){
+ * Esta clase controla el idioma que selecciona el usuario y lo persiste
+ * de forma síncrona, para que LocaleHelper.wrap() pueda leerlo de inmediato.
+ */
+class AppLocaleManager @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
     fun applylanguage(language: AppLanguage) {
-        val localeList = LocaleListCompat.forLanguageTags(language.languageCode)
-        AppCompatDelegate.setApplicationLocales(localeList)
-
+        LocaleHelper.persist(context, language.languageCode)
     }
 }

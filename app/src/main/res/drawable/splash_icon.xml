@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="240dp"
+    android:viewportWidth="240"
+    android:viewportHeight="240">
+
+    <!-- Aro exterior del reloj (solo contorno, sin relleno, para que se vea ligero) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#3949AB"
+        android:strokeWidth="14"
+        android:pathData="M32,120 a88,88 0 1,0 176,0 a88,88 0 1,0 -176,0" />
+
+    <!-- Manecilla larga (minutero), apuntando hacia arriba -->
+    <path
+        android:strokeColor="#3949AB"
+        android:strokeWidth="14"
+        android:strokeLineCap="round"
+        android:pathData="M120,120 L120,66" />
+
+    <!-- Manecilla corta (horario), apuntando en diagonal.
+         Junto con la manecilla larga forma, de forma sutil, un trazo tipo "check":
+         organizar el tiempo + tareas completadas en un mismo símbolo. -->
+    <path
+        android:strokeColor="#3949AB"
+        android:strokeWidth="14"
+        android:strokeLineCap="round"
+        android:pathData="M120,120 L150,104" />
+
+    <!-- Eje central del reloj -->
+    <path
+        android:fillColor="#3949AB"
+        android:pathData="M112,120 a8,8 0 1,0 16,0 a8,8 0 1,0 -16,0" />
+</vector>

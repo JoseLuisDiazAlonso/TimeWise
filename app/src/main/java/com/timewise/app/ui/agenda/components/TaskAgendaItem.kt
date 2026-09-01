@@ -2,7 +2,6 @@ package com.timewise.app.ui.agenda.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.content.MediaType.Companion.Text
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,57 +30,64 @@ import com.timewise.app.ui.theme.PriorityMedium
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import javax.annotation.meta.When
 
 /**Este archivo representa la lógica de una fila individual de la agenda.
- * Es un composable, es decir, recibe datos y un callback de click y no
- * conoce el ViewModel. Esto lo hace reutilizable.
+ * Es un composable, es decir, recibe datos y callbacks y no conoce el ViewModel.
+ * Esto lo hace reutilizable.
  * */
 
 @Composable
-fun TaskAgendaItem (
+fun TaskAgendaItem(
     task: Task,
     onClick: (Task) -> Unit = {},
+    onToggleComplete: (Task) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    Card (
+    Card(
         modifier = modifier
             .fillMaxWidth()
             .clickable { onClick(task) },
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-
     ) {
-        Row (
+        Row(
             modifier = Modifier.padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
-
-        )  {
-            //Barra de color lateral que indica la prioridad de una tarea de un vistazo
-            Box (
+        ) {
+            // Barra de color lateral que indica la prioridad de una tarea de un vistazo
+            Box(
                 modifier = Modifier
                     .width(4.dp)
                     .height(40.dp)
                     .background(
-                        color = task.priority.toColor (),
+                        color = task.priority.toColor(),
                         shape = RoundedCornerShape(2.dp)
                     )
             )
-            Spacer (modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.width(12.dp))
 
-            Column (modifier = Modifier.weight(1f)){
-                Text (
+            // El Checkbox consume su propio toque: pulsar aquí NO dispara el
+            // onClick de la Card (que abre el formulario de edición). Son dos
+            // acciones independientes en la misma fila.
+            Checkbox(
+                checked = task.isCompleted,
+                onCheckedChange = { onToggleComplete(task) }
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
                     text = task.title,
                     style = MaterialTheme.typography.bodyLarge,
                     textDecoration = if (task.isCompleted) TextDecoration.LineThrough else TextDecoration.None,
-                    color = if (task.isCompleted)  {
+                    color = if (task.isCompleted) {
                         MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                     } else {
                         MaterialTheme.colorScheme.onSurface
                     }
                 )
                 if (task.description.isNotBlank()) {
-                    Text (
+                    Text(
                         text = task.description,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
@@ -89,16 +96,14 @@ fun TaskAgendaItem (
                 }
             }
             task.dueDate?.let { dueDate ->
-                Text (
+                Text(
                     text = dueDate.toHourMinute(),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-
         }
     }
-
 }
 
 private fun Priority.toColor(): Color = when (this) {

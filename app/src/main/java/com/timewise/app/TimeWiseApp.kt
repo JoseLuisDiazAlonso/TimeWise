@@ -4,9 +4,11 @@ package com.timewise.app
  * antes de que se cargue cualquier pantalla.*/
 
 import android.app.Application
+import android.content.Context
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.timewise.app.data.local.locale.AppLocaleManager
+import com.timewise.app.data.local.locale.LocaleHelper
 import com.timewise.app.domain.usecase.settings.GetUserPreferencesUseCase
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
@@ -17,21 +19,25 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-@HiltAndroidApp // Anotamos la clase con @HiltAndroidApp para que Hilt genere el código necesario para la inyección de dependencias en toda la aplicación.
+@HiltAndroidApp
 class TimeWiseApp : Application(), Configuration.Provider {
 
-  @Inject // Inyectamos el HiltWorkerFactory para que WorkManager pueda crear instancias de nuestros workers con las dependencias necesarias.
-  lateinit var workerFactory: HiltWorkerFactory // Declaramos una propiedad para el HiltWorkerFactory que se inyectará en tiempo de ejecución.
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
 
-  @Inject
-  lateinit var getuserPreferencesUseCase: GetUserPreferencesUseCase //Nos permite leer el idioma guardado
+    @Inject
+    lateinit var getuserPreferencesUseCase: GetUserPreferencesUseCase
 
-  @Inject
-  lateinit var appLocaleManager: AppLocaleManager //Nos permite cambiar el idioma
+    @Inject
+    lateinit var appLocaleManager: AppLocaleManager
 
-    // Scope propio de la Application: no existe viewModelScope aquí porque esto no es un ViewModel.
-    // SupervisorJob evita que un fallo cancele el resto de tareas; Dispatchers.Default porque no toca UI.
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+    // Mismo wrap que en MainActivity, para que componentes que lean recursos desde
+    // el contexto de la Application (no solo la Activity) respeten el idioma.
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(LocaleHelper.wrap(base))
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -41,9 +47,8 @@ class TimeWiseApp : Application(), Configuration.Provider {
         }
     }
 
-  override  val workManagerConfiguration: Configuration /**Implementamos la propiedad workManagerConfiguration para proporcionar la configuración de WorkManager,
-  utilizando el HiltWorkerFactory para que WorkManager pueda crear instancias de nuestros workers con las dependencias necesarias.*/
-      get() = Configuration.Builder()
-          .setWorkerFactory(workerFactory)
-          .build()
+    override  val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 }
