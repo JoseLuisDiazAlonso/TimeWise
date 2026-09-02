@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Icon
@@ -23,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.timewise.app.R
 import com.timewise.app.ui.theme.SuccessColor
@@ -37,15 +39,13 @@ a cabo en caso que sean o no aceptados.
 fun NotificationPermissionPage () {
     val context = LocalContext.current
     var permissionGranted = remember {
-        // Verifica si el SDK es mayor o igual a 33 y comprueba si los permisos están concedidos
-        // o se aplican por inercia si el SDK es anterior al 33.
         mutableStateOf(
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-               ContextCompat.checkSelfPermission(
-                   context, Manifest.permission.POST_NOTIFICATIONS
-               ) == PackageManager.PERMISSION_GRANTED
+                ContextCompat.checkSelfPermission(
+                    context, Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED
             } else {
-                true // Permiso concedido automáticamente en versiones anteriores a API 33
+                true
             }
         )
     }
@@ -55,24 +55,35 @@ fun NotificationPermissionPage () {
         permissionGranted.value = granted
     }
     Column (
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
 
     ) {
-        Text(stringResource(R.string.onboarding_notification_title), style = MaterialTheme.typography.titleLarge)
+        Text(
+            stringResource(R.string.onboarding_notification_title),
+            style = MaterialTheme.typography.titleLarge,
+            textAlign = TextAlign.Center
+        )
         Spacer(modifier = Modifier.height(8.dp))
-        Text(stringResource(R.string.onboarding_notification_desc), style = MaterialTheme.typography.bodyLarge)
+        Text(
+            stringResource(R.string.onboarding_notification_desc),
+            style = MaterialTheme.typography.bodyLarge,
+            textAlign = TextAlign.Center
+        )
         Spacer(modifier = Modifier.height(24.dp))
         if (permissionGranted.value) {
-            Text(stringResource(R.string.onboarding_notification_granted), style = MaterialTheme.typography.bodyLarge)
-        } else {
             Icon(
                 imageVector = Icons.Default.CheckCircle,
                 contentDescription = null,
                 tint = SuccessColor
             )
+        } else {
+            Text(
+                stringResource(R.string.onboarding_notification_granted),
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Center
+            )
         }
-
     }
 }

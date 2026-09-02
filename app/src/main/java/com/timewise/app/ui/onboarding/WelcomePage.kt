@@ -1,11 +1,15 @@
 package com.timewise.app.ui.onboarding
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -45,15 +49,25 @@ fun WelcomePage(step: Int) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Icon(
-            imageVector = ImageVector.vectorResource(id = iconRes),
-            contentDescription = null,
-            modifier = Modifier.height(96.dp),
-            // Unspecified respeta los colores propios definidos dentro de cada
-            // vector (los alphas de la diana, las categorías del calendario...).
-            // Con un tint normal, Compose pintaría todo el icono de un solo color.
-            tint = Color.Unspecified
-        )
+        Box(
+            modifier = Modifier
+                .size(140.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+                    shape = CircleShape
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = ImageVector.vectorResource(id = iconRes),
+                contentDescription = null,
+                modifier = Modifier.size(80.dp),
+                // Unspecified respeta los colores propios definidos dentro de cada
+                // vector (los alphas de la diana, las categorías del calendario...).
+                // Con un tint normal, Compose pintaría todo el icono de un solo color.
+                tint = Color.Unspecified
+            )
+        }
         Spacer(modifier = Modifier.height(24.dp))
         Text(stringResource(id = titleRes), style = MaterialTheme.typography.titleLarge)
         Spacer(modifier = Modifier.height(16.dp))

@@ -33,6 +33,7 @@ import com.timewise.app.ui.common.ResponsiveScrollableScreen
 import com.timewise.app.ui.taskform.components.CategorySelector
 import com.timewise.app.ui.taskform.components.DateTimeSection
 import com.timewise.app.ui.taskform.components.PrioritySelector
+import com.timewise.app.ui.taskform.components.TaskDescriptionField
 import com.timewise.app.ui.taskform.components.TaskTitleField
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -112,6 +113,10 @@ fun TaskFormScreen(
                     value = uiState.title,
                     isError = uiState.titleError,
                     onValueChange = { viewModel.onTitleChanged(it) }
+                )
+                TaskDescriptionField(
+                    value = uiState.description,
+                    onValueChange = { viewModel.onDescriptionChanged(it) }
                 )
                 DateTimeSection(
                     date = uiState.dueDate,

@@ -10,6 +10,7 @@ class CreateTaskUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         title: String,
+        description: String,
         dueDate: Long?,
         priority: Priority,
         categoryId: Long
@@ -17,6 +18,7 @@ class CreateTaskUseCase @Inject constructor(
         require(title.isNotBlank()) { "El título de la tarea no puede estar en blanco" }
         val task = Task(
             title = title,
+            description = description,
             dueDate = dueDate,
             priority = priority,
             categoryId = categoryId

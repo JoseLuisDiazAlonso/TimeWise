@@ -11,6 +11,7 @@ class UpdateTaskUseCase @Inject constructor(
     suspend operator fun invoke(
         id: Long,
         title: String,
+        description: String,
         dueDate: Long?,
         priority: Priority,
         categoryId: Long
@@ -21,6 +22,7 @@ class UpdateTaskUseCase @Inject constructor(
 
         val updatedTask = currentTask.copy(
             title = title,
+            description = description,
             dueDate = dueDate,
             priority = priority,
             categoryId = categoryId,

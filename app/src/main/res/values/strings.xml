@@ -416,6 +416,17 @@
     <string name="task_delete_confirm_title">¿Eliminar esta tarea?</string>
     <string name="task_delete_confirm_message">Esta acción no se puede deshacer.</string>
     <string name="task_delete_confirm_action">Eliminar</string>
-    <string name="cancel">Cancelar</string> <!-- puede que ya exista, revisa antes de duplicar -->
+    <string name="cancel">Cancelar</string>
+
+    <string name="plan_premium_price_annual">24,99€/año</string>
+    <string name="plan_price_monthly_label">Mensual</string>
+    <string name="plan_price_annual_label">Anual</string>
+    <string name="plan_premium_savings_badge">Ahorra 30%</string>
+
+    <string name="plan_premium_feature_5">Bloques de tiempo en el calendario</string>
+
+    <!-- ES -->
+    <string name="stats_category_breakdown_title">Distribución por categoría</string>
+    <string name="nav_home">Inicio</string>
 
 </resources>

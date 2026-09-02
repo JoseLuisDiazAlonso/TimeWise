@@ -15,9 +15,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.ZoneOffset
+import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,11 +41,19 @@ class TaskFormViewModel @Inject constructor(
         viewModelScope.launch {
             val task = getTaskByIdUseCase(id).first()
             task?.let {
+                // Antes se calculaba con (date / 86400000) y (date % 86400000) a mano,
+                // que ignora la zona horaria del dispositivo. Ahora se convierte
+                // correctamente con ZoneId.systemDefault(), igual que al guardar.
+                val zonedDateTime = it.dueDate?.let { millis ->
+                    Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault())
+                }
+
                 _uiState.value = _uiState.value.copy(
                     id = it.id,
                     title = it.title,
-                    dueDate = it.dueDate?.let { date -> LocalDate.ofEpochDay(date / 86400000) },
-                    dueTime = it.dueDate?.let { date -> LocalTime.ofSecondOfDay((date % 86400000) / 1000) },
+                    description = it.description,
+                    dueDate = zonedDateTime?.toLocalDate(),
+                    dueTime = zonedDateTime?.toLocalTime(),
                     priority = it.priority,
                     categoryOption = availableCategories.find { category -> category.id.toLong() == it.categoryId }
                         ?: availableCategories.first()
@@ -57,6 +66,10 @@ class TaskFormViewModel @Inject constructor(
         _uiState.value = _uiState.value.copy(title = newTitle, titleError = false)
     }
 
+    fun onDescriptionChanged(newDescription: String) {
+        _uiState.value = _uiState.value.copy(description = newDescription)
+    }
+
     fun onSavedClicked() {
         val currentState = _uiState.value
         if (currentState.title.isBlank()) {
@@ -65,11 +78,21 @@ class TaskFormViewModel @Inject constructor(
         }
         viewModelScope.launch {
             _uiState.update { it.copy(isSaving = true) }
+
+            // ZoneId.systemDefault() en vez de ZoneOffset.UTC: la hora que elige el
+            // usuario en el picker es su hora local real, no UTC. Con UTC se guardaba
+            // desplazada tantas horas como la diferencia de tu zona horaria con UTC.
+            val dueDateMillis = currentState.dueDate
+                ?.atTime(currentState.dueTime ?: LocalTime.MIDNIGHT)
+                ?.atZone(ZoneId.systemDefault())
+                ?.toInstant()
+                ?.toEpochMilli()
+
             if (currentState.id == null) {
                 createTaskUseCase(
                     currentState.title,
-                    currentState.dueDate?.atTime(currentState.dueTime ?: LocalTime.MIDNIGHT)
-                        ?.toInstant(ZoneOffset.UTC)?.toEpochMilli(),
+                    currentState.description,
+                    dueDateMillis,
                     currentState.priority,
                     currentState.categoryOption.id.toLong()
                 )
@@ -77,8 +100,8 @@ class TaskFormViewModel @Inject constructor(
                 updateTaskUseCase(
                     currentState.id,
                     currentState.title,
-                    currentState.dueDate?.atTime(currentState.dueTime ?: LocalTime.MIDNIGHT)
-                        ?.toInstant(ZoneOffset.UTC)?.toEpochMilli(),
+                    currentState.description,
+                    dueDateMillis,
                     currentState.priority,
                     currentState.categoryOption.id.toLong()
                 )
@@ -90,7 +113,7 @@ class TaskFormViewModel @Inject constructor(
     }
 
     fun onDeleteClicked() {
-        val id = _uiState.value.id ?: return // no hay nada que borrar en modo creación
+        val id = _uiState.value.id ?: return
         viewModelScope.launch {
             deleteTaskUseCase(id)
             _uiState.update { it.copy(isDeleted = true) }

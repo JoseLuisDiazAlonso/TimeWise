@@ -14,6 +14,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -21,7 +22,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.timewise.app.R
 import com.timewise.app.domain.model.AppLanguage
+
 import com.timewise.app.ui.common.ResponsiveScrollableScreen
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,6 +35,8 @@ fun SettingsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val activity = context as? android.app.Activity
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
@@ -45,11 +50,6 @@ fun SettingsScreen(
             )
         }
     ) { padding ->
-        // ResponsiveScrollableScreen en vez de Column suelto: igual que en
-        // Paywall, el contenido es de longitud variable (AppLanguage.entries
-        // más adelante podría crecer, y las secciones de Notificaciones/Premium
-        // se van sumando debajo) -> sin scroll, en landscape con poca altura
-        // las últimas filas (Premium, por ejemplo) podrían quedar cortadas.
         ResponsiveScrollableScreen(modifier = Modifier.padding(padding)) {
             Column {
                 SettingsSectionHeader(stringResource(R.string.settings_section_language))
@@ -57,7 +57,15 @@ fun SettingsScreen(
                     LanguageOptionRow(
                         language = language,
                         selected = uiState.language == language,
-                        onClick = { viewModel.onLanguageSelected(language) }
+                        onClick = {
+                            scope.launch {
+                                viewModel.selectLanguage(language)
+                                // Mismo motivo que en el onboarding: en este dispositivo
+                                // el sistema no recompone solo tras cambiar el locale.
+                                // Forzamos recreate() solo cuando ya terminó de persistirse.
+                                activity?.recreate()
+                            }
+                        }
                     )
                 }
 

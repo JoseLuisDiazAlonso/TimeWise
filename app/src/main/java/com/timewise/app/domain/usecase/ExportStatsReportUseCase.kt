@@ -37,8 +37,6 @@ class ExportStatsReportUseCase @Inject constructor(
     }
 
     private fun TimeStatsSummary.toExportModel(): ExportsStatsReportModel {
-        // "this.categoryStats" explícito, en vez de dejarlo implícito,
-        // para forzar a Android Studio a resolver bien el tipo mientras depuras
         val statsList: List<CategoryTimeStats> = this.categoryStats
 
         val items: List<CategoryExportItem> = statsList.map { stat ->

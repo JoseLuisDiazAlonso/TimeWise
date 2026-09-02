@@ -47,11 +47,9 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun onLanguageSelected(language: AppLanguage) {
-        viewModelScope.launch {
-            setLanguageUseCase(language)
-            appLocaleManager.applylanguage(language)
-        }
+    suspend fun selectLanguage(language: AppLanguage) {
+        setLanguageUseCase(language)
+        appLocaleManager.applylanguage(language)
     }
 
     fun onNotificationsEnabled (enabled: Boolean) {
@@ -64,7 +62,7 @@ class SettingsViewModel @Inject constructor(
         notificationPermissionChecker.openSystemNotificationsSettings()
 
     fun onNotificationsToggled(b: Boolean) {
-            onNotificationsEnabled(b)
+        onNotificationsEnabled(b)
     }
 
     fun openSystemNotificationSettings(context: android.content.Context): Intent? {

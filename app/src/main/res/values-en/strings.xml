@@ -412,4 +412,23 @@
     <string name="export_column_time">Time</string>
     <string name="export_column_percentage">% of total</string>
     <string name="export_row_total">Total</string>
+
+    <string name="task_new_title">New task</string>
+    <string name="task_edit_title">Edit task</string>
+    <string name="task_delete_action">Delete task</string>
+    <string name="task_delete_confirm_title">Delete this task?</string>
+    <string name="task_delete_confirm_message">This action cannot be undone.</string>
+    <string name="task_delete_confirm_action">Delete</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="plan_premium_price_annual">24,99€/year</string>
+    <string name="plan_price_monthly_label">Monthly</string>
+    <string name="plan_premium_savings_badge">Save 30%</string>
+
+    <!-- EN -->
+    <string name="plan_premium_feature_5">Time blocks on the calendar</string>
+
+    <!-- EN -->
+    <string name="stats_category_breakdown_title">Time by category</string>
+    <string name="nav_home">Home</string>
 </resources>
