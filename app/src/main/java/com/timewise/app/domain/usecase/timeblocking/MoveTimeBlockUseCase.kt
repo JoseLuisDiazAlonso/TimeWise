@@ -1,49 +1,37 @@
 package com.timewise.app.domain.usecase.timeblocking
 
 import com.timewise.app.domain.repository.TimeBlockRepository
-import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
 
-/**
- * Esta clase maneja el caso específico de mover un bloque. Recibe únicamente el id y el nuevo
- * rango de horario, reconstruye el bloque entero con los nuevos valores y lo actualiza.
- *
- * Variables:
- *  - repository de tipo TimeBlockRepository y es Inyectado por el constructor.
- *  - validateOverlap es de tipo ValidateTimeBlockOverlapUseCase y es inyectado por el constructor.
- *
- * Funciones:
- *  - suspend operator fun invoke (blockId: Long, date: LocalDate, newStart: LocalTime,
- *  newEnd: LocalTime): Result<Unit>. Esta función obtiene el bloque actual con
- *  repository.getTimeBlockById(blockId), si es null devuelve Result.failure. También
- *  valida el solape con exludeId=blockId, Si es válido, construye una copia del bloque con
- *  copy(startTime = newStart, endTime = newEnd) y lo actualiza con repository.update(newBlock).
- *  **/
-
-class MoveTimeBlockUseCase @Inject constructor (
+class MoveTimeBlockUseCase @Inject constructor(
     private val repository: TimeBlockRepository,
-    private val validateOverlap: ValidateTimeBlockOverlapUseCase
+    private val validateTimeBlockOverlapUseCase: ValidateTimeBlockOverlapUseCase
 ) {
-    suspend fun invoke (blockId: Long, date: LocalDate, newStart: LocalTime, newEnd: LocalTime): Result<Unit> {
-        val currentBlock = repository.getTimeBlockById(blockId)
-        if (currentBlock == null) {
-            return Result.failure(Exception("Time block not found"))
+    suspend operator fun invoke(
+        id: Long,
+        newStartTime: LocalTime,
+        newEndTime: LocalTime
+    ): Result<Unit> {
+        if (newEndTime <= newStartTime) {
+            return Result.failure(IllegalArgumentException("La hora de fin debe ser posterior a la de inicio"))
         }
 
-        val isValid = validateOverlap(
-            date,
-            newStart,
-            newEnd,
-            blockId
+        val current = repository.getTimeBlockById(id)
+            ?: return Result.failure(IllegalArgumentException("No existe un bloque con id $id"))
+
+        val noOverlap = validateTimeBlockOverlapUseCase(current.date, newStartTime, newEndTime, excludeId = id)
+        if (!noOverlap) {
+            return Result.failure(IllegalStateException("overlap"))
+        }
+
+        repository.update(
+            current.copy(
+                startTime = newStartTime,
+                endTime = newEndTime,
+                updatedAt = System.currentTimeMillis()
+            )
         )
-
-        return if (isValid) {
-            val newBlock = currentBlock.copy(startTime = newStart, endTime = newEnd)
-            repository.update(newBlock)
-            Result.success(Unit)
-        } else {
-            Result.failure(Exception("Time block overlaps with existing blocks"))
-        }
+        return Result.success(Unit)
     }
 }

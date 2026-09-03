@@ -12,6 +12,7 @@ class CreateTaskUseCase @Inject constructor(
         title: String,
         description: String,
         dueDate: Long?,
+        reminderAt: Long?,
         priority: Priority,
         categoryId: Long
     ): Long {
@@ -20,6 +21,8 @@ class CreateTaskUseCase @Inject constructor(
             title = title,
             description = description,
             dueDate = dueDate,
+            reminderAt = reminderAt,
+            reminderEnabled = true,
             priority = priority,
             categoryId = categoryId
         )

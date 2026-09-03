@@ -15,7 +15,8 @@ import javax.inject.Inject
 /**
  * Recibe el broadcast BOOT_COMPLETED del sistema. Como AlarmManager pierde todas
  * las alarmas al reiniciar el dispositivo, este receiver vuelve a programar
- * el recordatorio de cada tarea que tenga uno pendiente en el futuro.
+ * el recordatorio de cada tarea que tenga uno pendiente en el futuro y que el
+ * usuario no haya desactivado manualmente (reminderEnabled).
  */
 @AndroidEntryPoint
 class BootCompletedReceiver : BroadcastReceiver() {
@@ -28,6 +29,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != Intent.ACTION_BOOT_COMPLETED) return
+        if (!reminderScheduler.canScheduleExactAlarms()) return
 
         val pendingResult = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
@@ -36,7 +38,9 @@ class BootCompletedReceiver : BroadcastReceiver() {
                 val pendingTasks = taskRepository.getPending().first()
 
                 pendingTasks
-                    .filter { task -> task.reminderAt != null && task.reminderAt > now }
+                    .filter { task ->
+                        task.reminderEnabled && task.reminderAt != null && task.reminderAt > now
+                    }
                     .forEach { task ->
                         reminderScheduler.schedule(
                             reminderId = task.id,

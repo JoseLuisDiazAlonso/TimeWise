@@ -429,4 +429,14 @@
     <string name="stats_category_breakdown_title">Distribución por categoría</string>
     <string name="nav_home">Inicio</string>
 
+    <!-- ES -->
+    <string name="exact_alarm_permission_title">Permiso necesario</string>
+    <string name="exact_alarm_permission_message">Para que los recordatorios suenen puntualmente, activa el permiso de alarmas exactas en Ajustes.</string>
+    <string name="exact_alarm_permission_action">Ir a Ajustes</string>
+
+    <string name="nav_calendar">Calendario</string>
+
+    <!-- ES -->
+    <string name="time_blocking_from_task_hint">Este bloque viene de una tarea. Para cambiar el título o la categoría, edita la tarea desde Inicio.</string>
+
 </resources>

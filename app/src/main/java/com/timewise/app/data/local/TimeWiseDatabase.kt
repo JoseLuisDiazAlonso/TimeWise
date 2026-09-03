@@ -10,14 +10,14 @@ import com.timewise.app.data.local.entity.EventEntity
 import com.timewise.app.data.local.entity.TaskEntity
 import com.timewise.app.data.local.entity.TimeBlockEntity
 
-@Database (
+@Database(
     entities = [TaskEntity::class, TimeBlockEntity::class, EventEntity::class],
-    version = 2,
+    version = 4,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
-abstract class TimeWiseDatabase : RoomDatabase () {
+abstract class TimeWiseDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
     abstract fun timeBlockDao(): TimeBlockDao
-    abstract fun eventDao() : EventDao
+    abstract fun eventDao(): EventDao
 }

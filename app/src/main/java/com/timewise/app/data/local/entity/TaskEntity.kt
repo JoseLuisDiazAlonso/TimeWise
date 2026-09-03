@@ -16,6 +16,7 @@ data class TaskEntity(
     val priority: String,
     val dueDate: Long?,
     val reminderAt: Long?,
+    val reminderEnabled: Boolean = true,
     val createdAt: Long,
     val updatedAt: Long
 ) {
@@ -28,6 +29,7 @@ data class TaskEntity(
         priority = Priority.valueOf(priority),
         dueDate = dueDate,
         reminderAt = reminderAt,
+        reminderEnabled = reminderEnabled,
         createdAt = createdAt,
         updatedAt = updatedAt
     )
@@ -42,6 +44,7 @@ data class TaskEntity(
             priority = task.priority.name,
             dueDate = task.dueDate,
             reminderAt = task.reminderAt,
+            reminderEnabled = task.reminderEnabled,
             createdAt = task.createdAt,
             updatedAt = task.updatedAt
         )

@@ -41,4 +41,3 @@ class PremiumRepositoryImpl @Inject constructor(
         const val KEY_IS_PREMIUM = "key_is_premium"
     }
 }
-

@@ -7,7 +7,6 @@ import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
@@ -15,6 +14,7 @@ import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -23,10 +23,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.foundation.layout.padding
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -44,14 +44,13 @@ import com.timewise.app.ui.agenda.AgendaScreen
 import com.timewise.app.ui.navigation.Destination
 import com.timewise.app.ui.navigation.InterstitialTriggerViewModel
 import com.timewise.app.ui.onboarding.OnboardingScreen
-import com.timewise.app.ui.premium.PremiumScreen
+import com.timewise.app.ui.paywall.PaywallScreen
 import com.timewise.app.ui.settings.SettingsScreen
 import com.timewise.app.ui.statistics.StatisticsScreen
 import com.timewise.app.ui.taskform.TaskFormScreen
 import com.timewise.app.ui.theme.TimeWiseTheme
+import com.timewise.app.ui.timeblocking.TimeBlockingScreen
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -131,24 +130,25 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
                                 composable(Destination.Calendar.route) {
-                                    // TODO: sustituir por TimeBlockingScreen real cuando esté conectada (Card #17).
-                                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                                        Text(stringResource(R.string.premium_coming_soon))
-                                    }
+                                    TimeBlockingScreen(
+                                        onUpgradeClick = { navController.navigate(Destination.Paywall.route) }
+                                    )
                                 }
                                 composable(Destination.Statistics.route) {
                                     StatisticsScreen(
-                                        onUpgradeClick = { navController.navigate(Destination.Premium.route) }
+                                        onUpgradeClick = { navController.navigate(Destination.Paywall.route) }
                                     )
                                 }
                                 composable(Destination.Settings.route) {
                                     SettingsScreen(
                                         onNavigateBack = { navController.popBackStack() },
-                                        onNavigateToPremium = { navController.navigate(Destination.Premium.route) }
+                                        onNavigateToPremium = { navController.navigate(Destination.Paywall.route) }
                                     )
                                 }
-                                composable(Destination.Premium.route) {
-                                    PremiumScreen(onNavigateBack = { navController.popBackStack() })
+                                composable(Destination.Paywall.route) {
+                                    PaywallScreen(
+                                        onPurchaseCompleted = { navController.popBackStack() }
+                                    )
                                 }
                                 composable(Destination.TaskFormCreate.route) {
                                     TaskFormScreen(
@@ -183,7 +183,7 @@ private fun AppBottomBar(navController: NavHostController) {
 
     val tabs = listOf(
         TabItem(Destination.Agenda.route, stringResource(R.string.nav_home), Icons.Filled.Home),
-        TabItem(Destination.Calendar.route, stringResource(R.string.nav_agenda), Icons.Filled.CalendarMonth),
+        TabItem(Destination.Calendar.route, stringResource(R.string.nav_calendar), Icons.Filled.CalendarMonth),
         TabItem(Destination.Statistics.route, stringResource(R.string.nav_statistics), Icons.Filled.BarChart),
         TabItem(Destination.Settings.route, stringResource(R.string.nav_settings), Icons.Filled.Settings)
     )

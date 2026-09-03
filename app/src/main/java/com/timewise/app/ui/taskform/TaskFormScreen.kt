@@ -1,5 +1,9 @@
 package com.timewise.app.ui.taskform
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,6 +38,7 @@ import com.timewise.app.ui.common.ResponsiveScrollableScreen
 import com.timewise.app.ui.taskform.components.CategorySelector
 import com.timewise.app.ui.taskform.components.DateTimeSection
 import com.timewise.app.ui.taskform.components.PrioritySelector
+import com.timewise.app.ui.taskform.components.ReminderSelector
 import com.timewise.app.ui.taskform.components.TaskDescriptionField
 import com.timewise.app.ui.taskform.components.TaskTitleField
 
@@ -44,6 +50,7 @@ fun TaskFormScreen(
     onNavigateBack: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
     var showDeleteConfirmation by remember { mutableStateOf(false) }
 
     LaunchedEffect(uiState.isSaved, uiState.isDeleted) {
@@ -69,6 +76,32 @@ fun TaskFormScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteConfirmation = false }) {
+                    Text(stringResource(R.string.cancel))
+                }
+            }
+        )
+    }
+
+    if (uiState.showExactAlarmPermissionDialog) {
+        AlertDialog(
+            onDismissRequest = { viewModel.onExactAlarmPermissionDialogDismissed() },
+            title = { Text(stringResource(R.string.exact_alarm_permission_title)) },
+            text = { Text(stringResource(R.string.exact_alarm_permission_message)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.onExactAlarmPermissionDialogDismissed()
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                            data = Uri.parse("package:${context.packageName}")
+                        }
+                        context.startActivity(intent)
+                    }
+                }) {
+                    Text(stringResource(R.string.exact_alarm_permission_action))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { viewModel.onExactAlarmPermissionDialogDismissed() }) {
                     Text(stringResource(R.string.cancel))
                 }
             }
@@ -123,6 +156,12 @@ fun TaskFormScreen(
                     time = uiState.dueTime,
                     onDateSelected = { viewModel.onDueDateChanged(it) },
                     onTimeSelected = { viewModel.onDueTimeChanged(it) }
+                )
+                ReminderSelector(
+                    selected = uiState.reminderOption,
+                    onOptionSelected = { viewModel.onReminderOptionChanged(it) },
+                    enabled = uiState.dueDate != null,
+                    modifier = Modifier.fillMaxWidth()
                 )
                 PrioritySelector(
                     selected = uiState.priority,

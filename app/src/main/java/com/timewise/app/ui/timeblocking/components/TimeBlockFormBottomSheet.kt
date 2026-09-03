@@ -1,172 +1,165 @@
 package com.timewise.app.ui.timeblocking
 
-import androidx.compose.foundation.layout.Box
+import android.app.TimePickerDialog
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ChevronLeft
-import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
-import com.timewise.app.ui.timeblocking.components.DailyTimeGrid
-import com.timewise.app.ui.timeblocking.components.DraggableTimeBlock
-import kotlinx.coroutines.launch
+import com.timewise.app.R
+import com.timewise.app.ui.taskform.components.CategorySelector
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
-/**
- * Pantalla raíz del Card #17. Recoge TimeBlockingViewModel con hiltViewModel(), colecciona
- * uiState.collectAsStateWithLifecycle() y compone DailyTimeGrid + una capa de
- * DraggableTimeBlock por cada elemento de timeBlocks, dentro de un Box con scroll vertical.
- * Si isPremiumUnlocked es false, muestra el paywall del Card #16 en su lugar.
- *
- * Funciones:
- *  - fun TimeBlockingScreen(navController: NavController,
- *    viewModel: TimeBlockingViewModel = hiltViewModel()): Unit
- **/
+private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
 @OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TimeBlockingScreen(
-    navController: NavController,
-    viewModel: TimeBlockingViewModel = hiltViewModel()
-) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-    var showForm by remember { mutableStateOf(false) }
-    var editingBlock by remember { mutableStateOf<TimeBlockUiModel?>(null) }
-
-    val snackbarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
-
-    LaunchedEffect(uiState.errorMessage) {
-        uiState.errorMessage?.let { message ->
-            coroutineScope.launch { snackbarHostState.showSnackbar(message) }
-            viewModel.onErrorMessageShown()
-        }
-    }
-
-    Scaffold(
-        topBar = {
-            TopAppBar(title = { Text("Planificación del día") })
-        },
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-        floatingActionButton = {
-            if (uiState.isPremiumUnlocked) {
-                FloatingActionButton(onClick = {
-                    editingBlock = null
-                    showForm = true
-                }) {
-                    Icon(Icons.Filled.Add, contentDescription = "Añadir bloque")
-                }
-            }
-        }
-    ) { paddingValues ->
-        if (!uiState.isPremiumUnlocked) {
-            // TODO: sustituir por el composable de paywall real del Card #16
-            // (confirmar nombre exacto: p. ej. PremiumPaywallContent(...))
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-            ) {
-                Text(
-                    text = "Función Premium — desbloquea la planificación visual con TimeWise Premium",
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
-        } else {
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-            ) {
-                DateSelector(
-                    selectedDate = uiState.selectedDate,
-                    onPreviousDay = { viewModel.onDateSelected(uiState.selectedDate.minusDays(1)) },
-                    onNextDay = { viewModel.onDateSelected(uiState.selectedDate.plusDays(1)) }
-                )
-
-                Box(modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                ) {
-                    DailyTimeGrid(modifier = Modifier.fillMaxSize())
-
-                    uiState.timeBlocks.forEach { block ->
-                        DraggableTimeBlock(
-                            block = block,
-                            onDragEnd = { id, newOffsetMinutes, newDurationEndMinutes ->
-                                viewModel.onBlockDragEnd(id, newOffsetMinutes, newDurationEndMinutes)
-                            }
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    if (showForm) {
-        TimeBlockFormBottomSheet(
-            initialBlock = editingBlock,
-            onDismiss = { showForm = false },
-            onConfirm = { title: String, start: Int, end: Int, color: String ->
-                if (editingBlock == null) {
-                    viewModel.onCreateBlock(title, start, end, color)
-                } else {
-                    // TODO: viewModel.onUpdateBlock(...) — pendiente de crear en el ViewModel
-                }
-                showForm = false
-            }
-        )
-    }
-}
-
 @Composable
 fun TimeBlockFormBottomSheet(
     initialBlock: TimeBlockUiModel?,
     onDismiss: () -> Unit,
-    onConfirm: Any
+    onConfirm: (title: String, start: LocalTime, end: LocalTime, colorHex: String) -> Unit,
+    onDelete: () -> Unit
 ) {
-    TODO("Not yet implemented")
-}
+    val sheetState = rememberModalBottomSheetState()
+    val context = LocalContext.current
 
-@Composable
-private fun DateSelector(
-    selectedDate: java.time.LocalDate,
-    onPreviousDay: () -> Unit,
-    onNextDay: () -> Unit
-) {
-    Row(modifier = Modifier.padding(8.dp)) {
-        IconButton(onClick = onPreviousDay) {
-            Icon(Icons.Filled.ChevronLeft, contentDescription = "Día anterior")
-        }
-        Text(
-            text = selectedDate.toString(),
-            modifier = Modifier.padding(top = 12.dp)
+    // Los bloques que vienen de una tarea (taskId != null) solo permiten ajustar la
+    // hora: el título y la categoría se heredan de la tarea y se editan desde ahí.
+    val isFromTask = initialBlock?.taskId != null
+
+    var title by remember { mutableStateOf(initialBlock?.title ?: "") }
+    var titleError by remember { mutableStateOf(false) }
+    var startTime by remember {
+        mutableStateOf(
+            initialBlock?.let { minutesToLocalTime(it.offsetMinutes) } ?: LocalTime.of(9, 0)
         )
-        IconButton(onClick = onNextDay) {
-            Icon(Icons.Filled.ChevronRight, contentDescription = "Día siguiente")
+    }
+    var endTime by remember {
+        mutableStateOf(
+            initialBlock?.let { minutesToLocalTime(it.offsetMinutes + it.durationMinutes) }
+                ?: LocalTime.of(9, 30)
+        )
+    }
+    var category by remember {
+        mutableStateOf(
+            initialBlock?.let { categoryOptionForHex(it.categoryColor) }
+                ?: com.timewise.app.ui.taskform.availableCategories.first()
+        )
+    }
+
+    val isEditing = initialBlock != null
+
+    ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 24.dp, vertical = 8.dp)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                text = stringResource(
+                    if (isEditing) R.string.time_blocking_edit_block
+                    else R.string.time_blocking_add_block
+                ),
+                style = MaterialTheme.typography.titleLarge
+            )
+
+            if (isFromTask) {
+                // Título fijo, no editable: viene de la tarea vinculada.
+                Text(text = title, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    text = stringResource(R.string.time_blocking_from_task_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            } else {
+                OutlinedTextField(
+                    value = title,
+                    onValueChange = { title = it; titleError = false },
+                    isError = titleError,
+                    label = { Text(stringResource(R.string.task_title_label)) },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                OutlinedButton(onClick = {
+                    TimePickerDialog(
+                        context,
+                        { _, hour, minute -> startTime = LocalTime.of(hour, minute) },
+                        startTime.hour, startTime.minute, true
+                    ).show()
+                }) {
+                    Text("${stringResource(R.string.time_blocking_start_time)}: ${startTime.format(timeFormatter)}")
+                }
+                OutlinedButton(onClick = {
+                    TimePickerDialog(
+                        context,
+                        { _, hour, minute -> endTime = LocalTime.of(hour, minute) },
+                        endTime.hour, endTime.minute, true
+                    ).show()
+                }) {
+                    Text("${stringResource(R.string.time_blocking_end_time)}: ${endTime.format(timeFormatter)}")
+                }
+            }
+
+            if (!isFromTask) {
+                Text(stringResource(R.string.time_blocking_category), style = MaterialTheme.typography.labelMedium)
+                CategorySelector(
+                    selected = category,
+                    onCategorySelected = { category = it }
+                )
+            }
+
+            Button(
+                onClick = {
+                    if (!isFromTask && title.isBlank()) {
+                        titleError = true
+                        return@Button
+                    }
+                    val finalColorHex = if (isFromTask) {
+                        initialBlock?.categoryColor ?: category.toHexString()
+                    } else {
+                        category.toHexString()
+                    }
+                    onConfirm(title, startTime, endTime, finalColorHex)
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.btn_save))
+            }
+
+            if (isEditing && !isFromTask) {
+                TextButton(
+                    onClick = onDelete,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        stringResource(R.string.time_blocking_delete_block),
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            }
         }
     }
 }

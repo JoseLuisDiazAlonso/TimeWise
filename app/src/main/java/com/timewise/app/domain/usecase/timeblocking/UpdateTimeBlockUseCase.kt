@@ -1,37 +1,40 @@
 package com.timewise.app.domain.usecase.timeblocking
 
-import com.timewise.app.domain.model.TimeBlock
 import com.timewise.app.domain.repository.TimeBlockRepository
+import java.time.LocalTime
 import javax.inject.Inject
 
-/**
- * Esta clase actualiza un bloque ya existente, validando de nuevo el solape
- * excluyendo el propio bloque.
- *
- * Propiedades:
- *  - repository: TimeBlockRepository, inyectado por constructor.
- *  - validateOverlap: ValidateTimeBlockOverlapUseCase, inyectado por constructor.
- *
- * Funciones:
- *  - suspend operator fun invoke(timeBlock: TimeBlock): Result<Unit>
- **/
 class UpdateTimeBlockUseCase @Inject constructor(
     private val repository: TimeBlockRepository,
-    private val validateOverlap: ValidateTimeBlockOverlapUseCase
+    private val validateTimeBlockOverlapUseCase: ValidateTimeBlockOverlapUseCase
 ) {
-    suspend operator fun invoke(timeBlock: TimeBlock): Result<Unit> {
-        val isValid = validateOverlap(
-            timeBlock.date,
-            timeBlock.startTime,
-            timeBlock.endTime,
-            timeBlock.id.takeIf { it != 0L }
-        )
+    suspend operator fun invoke(
+        id: Long,
+        title: String,
+        startTime: LocalTime,
+        endTime: LocalTime,
+        colorHex: String
+    ): Result<Unit> {
+        require(title.isNotBlank()) { "El título del bloque no puede estar en blanco" }
+        require(endTime > startTime) { "La hora de fin debe ser posterior a la de inicio" }
 
-        return if (isValid) {
-            repository.update(timeBlock)
-            Result.success(Unit)
-        } else {
-            Result.failure(Exception("Time block overlaps with existing blocks"))
+        val current = repository.getTimeBlockById(id)
+            ?: return Result.failure(IllegalArgumentException("No existe un bloque con id $id"))
+
+        val noOverlap = validateTimeBlockOverlapUseCase(current.date, startTime, endTime, excludeId = id)
+        if (!noOverlap) {
+            return Result.failure(IllegalStateException("overlap"))
         }
+
+        repository.update(
+            current.copy(
+                title = title,
+                startTime = startTime,
+                endTime = endTime,
+                colorHex = colorHex,
+                updatedAt = System.currentTimeMillis()
+            )
+        )
+        return Result.success(Unit)
     }
 }

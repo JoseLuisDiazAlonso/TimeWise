@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
@@ -21,11 +22,6 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-
-/**
- * Muestra la fecha y hora seleccionadas en un formato legible, y abre los
- * diálogos nativos de Android para elegir cada una.
- * **/
 
 private val dateFormatter = DateTimeFormatter.ofPattern("d MMM", Locale.getDefault())
 private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
@@ -55,7 +51,7 @@ fun DateTimeSection(
             ).show()
         }) {
             Icon(Icons.Filled.CalendarMonth, contentDescription = null, modifier = Modifier.size(18.dp))
-            androidx.compose.foundation.layout.Spacer(modifier = Modifier.size(6.dp))
+            Spacer(modifier = Modifier.size(6.dp))
             Text(text = date?.format(dateFormatter) ?: stringResource(id = R.string.task_due_date))
         }
 
@@ -68,8 +64,7 @@ fun DateTimeSection(
             ).show()
         }) {
             Icon(Icons.Filled.Schedule, contentDescription = null, modifier = Modifier.size(18.dp))
-            androidx.compose.foundation.layout.Spacer(modifier = Modifier.size(6.dp))
-            // Antes decía "date?.toString()" por error -> mostraba la fecha en el botón de la hora.
+            Spacer(modifier = Modifier.size(6.dp))
             Text(text = time?.format(timeFormatter) ?: stringResource(id = R.string.cd_time_icon))
         }
     }

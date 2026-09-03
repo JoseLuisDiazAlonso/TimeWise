@@ -13,6 +13,7 @@ class UpdateTaskUseCase @Inject constructor(
         title: String,
         description: String,
         dueDate: Long?,
+        reminderAt: Long?,
         priority: Priority,
         categoryId: Long
     ) {
@@ -24,6 +25,8 @@ class UpdateTaskUseCase @Inject constructor(
             title = title,
             description = description,
             dueDate = dueDate,
+            reminderAt = reminderAt,
+            reminderEnabled = if (reminderAt != null) true else currentTask.reminderEnabled,
             priority = priority,
             categoryId = categoryId,
             updatedAt = System.currentTimeMillis()

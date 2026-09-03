@@ -1,5 +1,6 @@
 package com.timewise.app.ui.statistics
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -115,9 +116,11 @@ private fun StatisticsContent(
 
 @Composable
 private fun CategoryRow(stat: CategoryTimeStats) {
+    val category = com.timewise.app.ui.timeblocking.categoryOptionForHex(stat.categoryColorHex)
+
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -128,7 +131,7 @@ private fun CategoryRow(stat: CategoryTimeStats) {
                     .getOrDefault(MaterialTheme.colorScheme.primary)
             ) {}
             Spacer(modifier = Modifier.width(8.dp))
-            Text(stat.categoryColorHex, style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(category.labelRes), style = MaterialTheme.typography.bodyMedium)
         }
         Text("${(stat.percentage * 100).toInt()}%", style = MaterialTheme.typography.bodyMedium)
     }

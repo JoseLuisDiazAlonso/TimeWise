@@ -6,13 +6,7 @@ package com.timewise.app.domain.repository
  * **/
 
 interface ReminderScheduler {
-    fun schedule (reminderId: Long, title: String, triggerAtMillis: Long)
-    fun cancel (reminderId: Long)
-    abstract fun schedule(reminderId: Long, title: String)
-
-    companion object {
-        fun schedule(reminderId: Long, title: String) {
-
-        }
-    }
+    fun schedule(reminderId: Long, title: String, triggerAtMillis: Long)
+    fun cancel(reminderId: Long)
+    fun canScheduleExactAlarms(): Boolean
 }

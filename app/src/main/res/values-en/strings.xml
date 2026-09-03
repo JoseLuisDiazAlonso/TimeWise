@@ -431,4 +431,18 @@
     <!-- EN -->
     <string name="stats_category_breakdown_title">Time by category</string>
     <string name="nav_home">Home</string>
+
+    <!-- EN -->
+    <string name="exact_alarm_permission_title">Permission needed</string>
+    <string name="exact_alarm_permission_message">To make reminders ring on time, enable exact alarms permission in Settings.</string>
+    <string name="exact_alarm_permission_action">Go to Settings</string>
+
+    <string name="plan_price_annual_label">Annual</string>
+
+    <string name="nav_calendar">Calendar</string>
+
+    <!-- EN -->
+    <string name="time_blocking_from_task_hint">This block comes from a task. To change its title or category, edit the task from Home.</string>
+
+
 </resources>
