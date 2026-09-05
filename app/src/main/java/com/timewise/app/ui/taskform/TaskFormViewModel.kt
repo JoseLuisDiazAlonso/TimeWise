@@ -91,7 +91,7 @@ class TaskFormViewModel @Inject constructor(
     }
 
     fun onExactAlarmPermissionDialogDismissed() {
-        _uiState.update { it.copy(showExactAlarmPermissionDialog = false) }
+        _uiState.update { it.copy(showExactAlarmPermissionDialog = false, isSaved = true) }
     }
 
     fun onSavedClicked() {
@@ -137,17 +137,18 @@ class TaskFormViewModel @Inject constructor(
                 currentState.id
             }
 
+            var needsPermissionDialog = false
+
             if (reminderMillis != null) {
                 if (reminderScheduler.canScheduleExactAlarms()) {
                     reminderScheduler.schedule(taskId, currentState.title, reminderMillis)
                 } else {
-                    _uiState.update { it.copy(showExactAlarmPermissionDialog = true) }
+                    needsPermissionDialog = true
                 }
             } else {
                 reminderScheduler.cancel(taskId)
             }
 
-            // Toda tarea con fecha y hora aparece siempre como bloque en el calendario.
             syncTaskTimeBlockUseCase.syncForTask(
                 taskId = taskId,
                 title = currentState.title,
@@ -155,8 +156,16 @@ class TaskFormViewModel @Inject constructor(
                 colorHex = currentState.categoryOption.toHexString()
             )
 
+            // La tarea ya está guardada en la base de datos en este punto. Si hace falta
+            // el permiso, NO cerramos la pantalla todavía -> se cierra al descartar el
+            // diálogo (ver onExactAlarmPermissionDialogDismissed), para que el usuario
+            // tenga tiempo real de leerlo y decidir.
             _uiState.update {
-                it.copy(isSaving = false, isSaved = true)
+                it.copy(
+                    isSaving = false,
+                    isSaved = !needsPermissionDialog,
+                    showExactAlarmPermissionDialog = needsPermissionDialog
+                )
             }
         }
     }

@@ -127,10 +127,9 @@
     <string name="onboarding_step1_title">Organiza tu día</string>
     <string name="onboarding_step1_desc">Crea tareas, asigna prioridades y nunca pierdas el hilo de lo importante.</string>
     <string name="onboarding_step2_title">Bloques de tiempo visuales</string>
-    <string name="onboarding_step2_desc">Visualiza tu jornada con bloques de tiempo. Arrastra y organiza tu agenda de forma intuitiva.</string>
+    <string name="onboarding_step2_desc">Visualiza tu jornada con bloques de tiempo. Organiza tu agenda de forma intuitiva.</string>
     <string name="onboarding_step3_title">Recordatorios inteligentes</string>
     <string name="onboarding_step3_desc">Recibe notificaciones a tiempo para no olvidar ninguna tarea o compromiso.</string>
-    <string name="onboarding_step4_title">Sincronización en la nube</string>
     <string name="onboarding_step4_desc">Con TimeWise Premium, accede a tu agenda desde cualquier dispositivo. Tus datos siempre contigo.</string>
     <string name="onboarding_language_title">Elige tu idioma</string>
     <string name="onboarding_language_desc">Selecciona el idioma en el que quieres usar TimeWise</string>
@@ -148,7 +147,6 @@
     <string name="premium_yearly">Anual</string>
     <string name="premium_yearly_save">Ahorra un 40%</string>
     <string name="premium_restore">Restaurar compra</string>
-    <string name="premium_feature_sync">Sincronización en la nube</string>
     <string name="premium_feature_unlimited">Tareas y categorías ilimitadas</string>
     <string name="premium_feature_export">Exportar a PDF / CSV</string>
     <string name="premium_feature_widget">Widget de escritorio</string>
@@ -175,7 +173,7 @@
     <string name="plan_premium_feature_1">Sin anuncios</string>
     <string name="plan_premium_feature_2">Estadísticas avanzadas</string>
     <string name="plan_premium_feature_3">Widget de escritorio</string>
-    <string name="plan_premium_feature_4">Exportación a PDF / CSV</string>
+    <string name="plan_premium_feature_4">Exportación a PDF</string>
     <string name="premium_coming_soon">Próximamente</string>
     <string name="premium_status_active">Premium activo</string>
     <string name="premium_status_free">Plan gratuito</string>
@@ -438,5 +436,8 @@
 
     <!-- ES -->
     <string name="time_blocking_from_task_hint">Este bloque viene de una tarea. Para cambiar el título o la categoría, edita la tarea desde Inicio.</string>
+
+    <!-- ES -->
+    <string name="stats_hours_by_day_title">Horas por día</string>
 
 </resources>

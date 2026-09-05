@@ -444,5 +444,8 @@
     <!-- EN -->
     <string name="time_blocking_from_task_hint">This block comes from a task. To change its title or category, edit the task from Home.</string>
 
+    <!-- EN -->
+    <string name="stats_hours_by_day_title">Hours per day</string>
+
 
 </resources>

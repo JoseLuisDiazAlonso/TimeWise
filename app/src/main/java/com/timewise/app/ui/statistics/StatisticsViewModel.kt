@@ -42,6 +42,7 @@ class StatisticsViewModel @Inject constructor(
             periodStart = summary.periodStart,
             periodEnd = summary.periodEnd,
             categoryStats = summary.categoryStats,
+            dailyHours = summary.dailyHours,
             totalTrackedMinutes = summary.totalTrackedMinutes,
             isLoading = false,
             isUnlocked = isUnlocked

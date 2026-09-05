@@ -3,6 +3,7 @@ package com.timewise.app.domain.usecase
 // ❌ import android.util.Pair  <-- ESTE import ha sido el culpable de todos los errores. Fuera.
 
 import com.timewise.app.domain.model.CategoryTimeStats
+import com.timewise.app.domain.model.DailyHours
 import com.timewise.app.domain.model.TimeBlock
 import com.timewise.app.domain.model.TimeStatsPeriod
 import com.timewise.app.domain.model.TimeStatsSummary
@@ -68,6 +69,16 @@ class GetTimeStatsUseCase @Inject constructor(
                 )
             }
             .sortedByDescending { it.totalMinutes }
+
+        val dailyHours = if(period == TimeStatsPeriod.SEMANAL) {
+            (0..6).map {offset ->
+                val day = start.plusDays(offset.toLong())
+                val minutesThatDay = blocks.filter {it.date == day}.sumOf { minutesOf(it) }
+                DailyHours(date = day, hours = minutesThatDay/60f)
+            }
+        } else {
+            emptyList()
+        }
         return TimeStatsSummary(
             period = period,
             periodStart = start,

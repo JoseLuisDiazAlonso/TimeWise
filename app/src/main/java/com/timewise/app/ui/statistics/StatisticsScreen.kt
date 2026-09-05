@@ -1,5 +1,6 @@
 package com.timewise.app.ui.statistics
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
@@ -21,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -29,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.timewise.app.R
 import com.timewise.app.domain.model.CategoryTimeStats
+import com.timewise.app.domain.model.DailyHours
 import com.timewise.app.domain.model.TimeStatsPeriod
 import com.timewise.app.ui.common.ResponsiveScrollableScreen
 
@@ -99,6 +103,20 @@ private fun StatisticsContent(
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
             } else {
+                if (uiState.period == TimeStatsPeriod.SEMANAL && uiState.dailyHours.isNotEmpty()) {
+                    Text(
+                        stringResource(R.string.stats_hours_by_day_title),
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Card {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            WeeklyBarChart(dailyHours = uiState.dailyHours)
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(24.dp))
+                }
+
                 Text(
                     stringResource(R.string.stats_category_breakdown_title),
                     style = MaterialTheme.typography.titleSmall
@@ -109,6 +127,41 @@ private fun StatisticsContent(
                     CategoryRow(stat = stat)
                     Spacer(modifier = Modifier.height(8.dp))
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun WeeklyBarChart(dailyHours: List<DailyHours>) {
+    val dayLabels = listOf(
+        R.string.mon, R.string.tue, R.string.wed,
+        R.string.thu, R.string.fri, R.string.sat, R.string.sun
+    )
+    val maxHours = (dailyHours.maxOfOrNull { it.hours } ?: 1f).coerceAtLeast(1f)
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(140.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.Bottom
+    ) {
+        dailyHours.forEachIndexed { index, day ->
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                val barHeightFraction = (day.hours / maxHours).coerceIn(0f, 1f)
+                Box(
+                    modifier = Modifier
+                        .width(20.dp)
+                        .height((100 * barHeightFraction).dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(MaterialTheme.colorScheme.primary)
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    stringResource(dayLabels[index]).take(1),
+                    style = MaterialTheme.typography.labelSmall
+                )
             }
         }
     }

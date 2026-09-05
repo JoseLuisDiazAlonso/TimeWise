@@ -12,5 +12,6 @@ data class TimeStatsSummary (
     val periodStart: LocalDate,
     val periodEnd: LocalDate,
     val categoryStats: List<CategoryTimeStats>,
-    val totalTrackedMinutes: Long
+    val totalTrackedMinutes: Long,
+    val dailyHours: List<DailyHours> = emptyList()
 )
