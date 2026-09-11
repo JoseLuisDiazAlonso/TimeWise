@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Política de Privacidad - TimeWise</title>
+</head>
+<body>
+<h1>Política de Privacidad de TimeWise</h1>
+<p>Última actualización: [5 Septiembre 2026]</p>
+
+<p>TimeWise ("la app") es una aplicación de gestión de tareas y productividad desarrollada por José Luis Díaz Alonso. Esta política explica qué datos se tratan al usar la app.</p>
+
+<h2>Datos que NO recogemos</h2>
+<p>TimeWise no requiere registro ni cuenta de usuario. Tus tareas, bloques de tiempo, recordatorios y estadísticas se almacenan únicamente en tu dispositivo. No tenemos servidores propios que reciban o almacenen esta información.</p>
+
+<h2>Copia de seguridad</h2>
+<p>Si tienes activada la copia de seguridad de Android en tu dispositivo, tus datos locales de la app pueden respaldarse automáticamente a través del servicio de copia de seguridad de Google, asociado a tu cuenta de Google. Puedes desactivar esto en los ajustes de tu dispositivo.</p>
+
+<h2>Anuncios</h2>
+<p>TimeWise muestra anuncios mediante Google AdMob. AdMob puede recoger identificadores de publicidad y datos del dispositivo para mostrar anuncios, incluyendo personalizados. Puedes consultar cómo Google trata estos datos en su <a href="https://policies.google.com/privacy">Política de Privacidad</a>.</p>
+
+<h2>Compras y suscripciones</h2>
+<p>Las compras y suscripciones premium se procesan íntegramente a través de Google Play Billing. TimeWise no almacena ni tiene acceso a datos de tu tarjeta o método de pago; esa información la gestiona Google Play.</p>
+
+<h2>Menores</h2>
+<p>TimeWise no está dirigida a menores de 13 años y no recogemos conscientemente datos de menores.</p>
+
+<h2>Eliminación de datos</h2>
+<p>Puedes eliminar todos tus datos locales desinstalando la app o borrando su almacenamiento desde los ajustes de tu dispositivo.</p>
+
+<h2>Contacto</h2>
+<p>Para cualquier pregunta sobre esta política, contacta en: [joseluisdiazdeveloper@gmail.com]</p>
+</body>
+</html>
