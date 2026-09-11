@@ -447,5 +447,11 @@
     <!-- EN -->
     <string name="stats_hours_by_day_title">Hours per day</string>
 
+    <!-- EN -->
+    <string name="stats_export_pdf_button">Export to PDF</string>
+
+    <!-- EN -->
+    <string name="export_error">Failed to export report</string>
+
 
 </resources>

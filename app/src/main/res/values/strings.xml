@@ -440,4 +440,12 @@
     <!-- ES -->
     <string name="stats_hours_by_day_title">Horas por día</string>
 
+    <!-- ES -->
+    <string name="stats_export_pdf_button">Exportar a PDF</string>
+
+    <!-- ES -->
+    <string name="onboarding_step4_title">Sincronización en la nube</string>
+    <string name="premium_feature_sync">Sincronización en la nube</string>
+    <string name="export_error">No se pudo exportar el informe</string>
+
 </resources>

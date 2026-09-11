@@ -12,4 +12,5 @@ sealed class Destination(val route: String) {
     object Settings : Destination("settings")
     object Premium : Destination("premium")
     object Paywall : Destination("paywall")
+    object Export : Destination("export")
 }

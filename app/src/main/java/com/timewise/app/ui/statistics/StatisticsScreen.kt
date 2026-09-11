@@ -39,6 +39,7 @@ import com.timewise.app.ui.common.ResponsiveScrollableScreen
 @Composable
 fun StatisticsScreen(
     onUpgradeClick: () -> Unit = {},
+    onExportClick: () -> Unit = {},
     viewModel: StatisticsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -48,7 +49,8 @@ fun StatisticsScreen(
     } else {
         StatisticsContent(
             uiState = uiState,
-            onPeriodSelected = viewModel::onPeriodSelected
+            onPeriodSelected = viewModel::onPeriodSelected,
+            onExportClick = onExportClick
         )
     }
 }
@@ -76,7 +78,8 @@ private fun StatisticsLockedContent(onUpgradeClick: () -> Unit) {
 @Composable
 private fun StatisticsContent(
     uiState: StatisticsUiState,
-    onPeriodSelected: (TimeStatsPeriod) -> Unit
+    onPeriodSelected: (TimeStatsPeriod) -> Unit,
+    onExportClick: () -> Unit
 ) {
     ResponsiveScrollableScreen {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -126,6 +129,15 @@ private fun StatisticsContent(
                 uiState.categoryStats.forEach { stat ->
                     CategoryRow(stat = stat)
                     Spacer(modifier = Modifier.height(8.dp))
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Button(
+                    onClick = onExportClick,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(stringResource(R.string.stats_export_pdf_button))
                 }
             }
         }

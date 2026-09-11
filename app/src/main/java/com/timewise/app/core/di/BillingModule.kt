@@ -2,6 +2,7 @@ package com.timewise.app.core.di
 
 import android.content.Context
 import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.timewise.app.data.billing.BillingRepositoryImpl
 import com.timewise.app.domain.repository.BillingRepository
@@ -41,7 +42,11 @@ abstract class BillingModule {
             listener: PurchasesUpdatedListener
         ): BillingClient = BillingClient.newBuilder(context)
             .setListener(listener)
-            .enablePendingPurchases()
+            .enablePendingPurchases(
+                PendingPurchasesParams.newBuilder()
+                    .enableOneTimeProducts()
+                    .build()
+            )
             .build()
     }
 }

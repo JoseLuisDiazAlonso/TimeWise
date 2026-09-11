@@ -14,14 +14,24 @@ plugins {
 val localProperties = Properties().also { props ->
     val file = rootProject.file("local.properties")
     if (file.exists()) props.load(file.inputStream())
+
 }
 
 android {
     namespace  = "com.timewise.app"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(localProperties.getProperty("RELEASE_STORE_FILE"))
+            storePassword = localProperties.getProperty("RELEASE_STORE_PASSWORD")
+            keyAlias = localProperties.getProperty("RELEASE_KEY_ALIAS")
+            keyPassword = localProperties.getProperty("RELEASE_KEY_PASSWORD")
+        }
+    }
+
     defaultConfig {
-        applicationId = "com.timewise.app"
+        applicationId = "com.joseluisdiazalonso.timewise"
         minSdk        = libs.versions.minSdk.get().toInt()
         targetSdk     = libs.versions.targetSdk.get().toInt()
         versionCode   = libs.versions.versionCode.get().toInt()
@@ -57,6 +67,7 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("Boolean", "USE_TEST_ADS", "false")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
@@ -76,6 +87,11 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    bundle {
+        language {
+            enableSplit = false
         }
     }
 }
@@ -150,7 +166,6 @@ dependencies {
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
     implementation ("androidx.appcompat:appcompat:1.7.0")
     implementation ("com.google.android.gms:play-services-ads:24.9.0")
-    implementation ("com.android.billingclient:billing-ktx:5.1.0")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 

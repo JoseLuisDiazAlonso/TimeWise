@@ -2,11 +2,13 @@ package com.timewise.app.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.timewise.app.domain.repository.BillingRepository
 import com.timewise.app.domain.usecase.onboarding.IsOnboardingCompletedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -22,7 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
-    isOnboardingCompletedUseCase: IsOnboardingCompletedUseCase
+    isOnboardingCompletedUseCase: IsOnboardingCompletedUseCase,
+    private val billingRepository: BillingRepository
 ) : ViewModel() {
     val startDestination = isOnboardingCompletedUseCase()
         .map { completed -> if (completed) "agenda" else "onboarding"}
@@ -32,4 +35,10 @@ class MainActivityViewModel @Inject constructor(
             initialValue =  null
 
         )
+
+    init {
+        viewModelScope.launch {
+            billingRepository.verifyExistingPurchases()
+        }
+    }
 }

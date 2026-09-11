@@ -50,6 +50,7 @@ import com.timewise.app.ui.statistics.StatisticsScreen
 import com.timewise.app.ui.taskform.TaskFormScreen
 import com.timewise.app.ui.theme.TimeWiseTheme
 import com.timewise.app.ui.timeblocking.TimeBlockingScreen
+import com.timewise.app.ui.export.ExportStatsReportScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -136,7 +137,13 @@ class MainActivity : ComponentActivity() {
                                 }
                                 composable(Destination.Statistics.route) {
                                     StatisticsScreen(
-                                        onUpgradeClick = { navController.navigate(Destination.Paywall.route) }
+                                        onUpgradeClick = { navController.navigate(Destination.Paywall.route) },
+                                        onExportClick = { navController.navigate(Destination.Export.route) }
+                                    )
+                                }
+                                composable(Destination.Export.route) {
+                                    ExportStatsReportScreen(
+                                        onNavigateToPaywall = { navController.navigate(Destination.Paywall.route) }
                                     )
                                 }
                                 composable(Destination.Settings.route) {

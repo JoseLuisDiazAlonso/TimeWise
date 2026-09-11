@@ -1,11 +1,14 @@
 package com.timewise.app.data.repository
 
 import android.content.Context
+
 import com.timewise.app.domain.model.PurchaseState
 import com.timewise.app.domain.repository.BillingRepository
 import com.timewise.app.domain.repository.PremiumRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
@@ -26,6 +29,7 @@ class PremiumRepositoryImpl @Inject constructor(
 
     override fun observeIsPremium(): Flow<Boolean> =
         billingRepository.observePurchaseState()
+            .filter { state -> state != PurchaseState.Verifying }
             .map { state -> state == PurchaseState.Purchased }
             .onEach { isPremium -> persistPremiumFlag(isPremium) }
             .onStart { emit(readPersistedFlag()) }

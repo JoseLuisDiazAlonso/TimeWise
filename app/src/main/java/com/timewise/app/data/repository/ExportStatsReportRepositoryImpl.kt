@@ -7,11 +7,13 @@ import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
+import com.timewise.app.domain.model.CategoryExportItem
 import com.timewise.app.domain.model.ExportResult
 import com.timewise.app.domain.model.ExportsStatsReportModel
 import com.timewise.app.domain.repository.ExportStatsReportRepository
+import com.timewise.app.ui.timeblocking.categoryOptionForHex
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.lang.reflect.Type
+import java.time.Duration
 import javax.inject.Inject
 
 /**
@@ -22,12 +24,20 @@ import javax.inject.Inject
  *
  *  Funciones
  *   - override suspend fun generatePdfReport(uri: Uri, report: ExportsStatsReportModel): ExportResult
- *   - private fun buildPdfDocument(report: ExportsStatsReportModel): pdfDocument
- *   - private fun drawHeader (canvas: Canvas, report: ExportsStatsReportModel)
- *   captura excepciones de E/S (IOException, SecurityException)-> ExportResult.Error
+ *   - private fun buildPdfDocument(report: ExportsStatsReportModel): PdfDocument
+ *   - private fun drawHeader(canvas: Canvas, report: ExportsStatsReportModel)
+ *   - private fun drawCategoryTable(canvas: Canvas, report: ExportsStatsReportModel)
+ *   captura excepciones de E/S (IOException, SecurityException) -> ExportResult.Error
+ *
+ *   Nota: item.category en CategoryExportItem contiene el colorHex crudo (ver
+ *   ExportStatsReportUseCase.toExportModel), no un nombre legible. Se resuelve aquí
+ *   con categoryOptionForHex(), el mismo helper que ya usa StatisticsScreen para lo mismo.
  */
 
-class ExportStatsReportRepositoryImpl @Inject constructor(@ApplicationContext private val context: Context) : ExportStatsReportRepository {
+class ExportStatsReportRepositoryImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : ExportStatsReportRepository {
+
     override suspend fun generatePdfReport(uri: Uri, report: ExportsStatsReportModel): ExportResult {
         return try {
             val pdfDocument = buildPdfDocument(report)
@@ -43,9 +53,9 @@ class ExportStatsReportRepositoryImpl @Inject constructor(@ApplicationContext pr
 
     private fun buildPdfDocument(report: ExportsStatsReportModel): PdfDocument {
         val pdfDocument = PdfDocument()
-        val A4_WIDTH = 595
-        val A4_HEIGHT = 842
-        val pageInfo = PdfDocument.PageInfo.Builder(A4_WIDTH, A4_HEIGHT, 1).create()
+        val a4Width = 595
+        val a4Height = 842
+        val pageInfo = PdfDocument.PageInfo.Builder(a4Width, a4Height, 1).create()
         val page = pdfDocument.startPage(pageInfo)
         val canvas = page.canvas
 
@@ -67,25 +77,57 @@ class ExportStatsReportRepositoryImpl @Inject constructor(@ApplicationContext pr
             textSize = 12f
         }
         canvas.drawText("TimeWise", 40f, 50f, titlePaint)
-        canvas.drawText("Informe semanal", 40f, 72f, subtitlePaint)
+        canvas.drawText("Informe semanal · ${report.weekPeriod}", 40f, 72f, subtitlePaint)
         canvas.drawLine(40f, 82f, 555f, 82f, Paint().apply {
             color = Color.parseColor("#D0D3DA")
         })
     }
-    private fun drawCategoryTable (canvas: Canvas, report: ExportsStatsReportModel) {
+
+    private fun drawCategoryTable(canvas: Canvas, report: ExportsStatsReportModel) {
         var y = 120f
         val rowHeight = 28f
+
         val headerPaint = Paint().apply {
-            color = Color.parseColor("#3949AB"); textSize = 11f
+            color = Color.parseColor("#3949AB")
+            textSize = 11f
             typeface = Typeface.DEFAULT_BOLD
         }
         val cellPaint = Paint().apply {
-            color = Color.parseColor("#26282E"); textSize = 11f
+            color = Color.parseColor("#26282E")
+            textSize = 11f
         }
+        val linePaint = Paint().apply {
+            color = Color.parseColor("#E4E6EB")
+        }
+
+        // Cabecera de columnas
+        canvas.drawText("Categoría", 40f, y, headerPaint)
+        canvas.drawText("Tiempo", 300f, y, headerPaint)
+        canvas.drawText("% del total", 440f, y, headerPaint)
+        y += 12f
+        canvas.drawLine(40f, y, 555f, y, linePaint)
+        y += rowHeight
+
+        // Filas de datos, una por categoría
+        report.items.forEach { item: CategoryExportItem ->
+            val categoryName = context.getString(categoryOptionForHex(item.category).labelRes)
+            canvas.drawText(categoryName, 40f, y, cellPaint)
+            canvas.drawText(formatDuration(item.duration), 300f, y, cellPaint)
+            canvas.drawText("${item.percentage.toInt()}%", 440f, y, cellPaint)
+            y += rowHeight
+            canvas.drawLine(40f, y - rowHeight + 10f, 555f, y - rowHeight + 10f, linePaint)
+        }
+
+        // Fila de total
+        y += 8f
+        canvas.drawLine(40f, y - rowHeight + 10f, 555f, y - rowHeight + 10f, headerPaint)
+        canvas.drawText("Total", 40f, y, headerPaint)
+        canvas.drawText(formatDuration(report.totalDuration), 300f, y, headerPaint)
     }
+
+    private fun formatDuration(duration: Duration): String {
+        val hours = duration.toHours()
+        val minutes = duration.toMinutesPart()
+        return if (hours > 0) "${hours}h ${minutes}min" else "${minutes}min"
     }
-
-
-
-
-
+}
